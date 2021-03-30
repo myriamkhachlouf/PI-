@@ -1,0 +1,59 @@
+{% extends 'tables.html.twig' %}
+
+{% block title %} Liste des reclamations {% endblock %}
+ {% block content %}
+     <div class="card-header">
+         <h4 class="card-title"> Les reclamations Archivées</h4>
+     </div>
+ {% endblock %}
+{% block th %}
+
+    <th> Réclamation de la part</th>
+    <th>Réclamation contre</th>
+    <th>Description</th>
+    <th>Date de reclamation</th>
+    <th>Etat</th>
+    <th>Image</th>
+    <th>Objet</th>
+
+{% endblock %}
+         {% block td %}
+             {% for reclamation in rec %}
+                 <tr>
+
+                     <td>{{ reclamation.user.nom}}</td>
+                     {% if  reclamation.target==null %}
+                         <td ><span class="label label-primary">Formation</span>
+                         </td>
+                     {% endif %}
+                     {% if  reclamation.target!=null %}
+                         <td ><span class="label label-success">{{ reclamation.target}}</span>
+
+                         </td>
+                     {% endif %}
+                     <td>{{ reclamation.description }}</td>
+                     <td>{{ reclamation.date | date ('Y-m-d H:i:s') }}</td>
+
+
+
+                         <td ><span class="label label-warning">{{ reclamation.etat }}</span></td>
+
+
+                     <td><img style="margin-bottom: -18px" src="{{ asset('uploads/' ~ reclamation.image) }}" width="200" height="100"></td>
+                     <td>{{ reclamation.objet }}</td>
+
+
+
+                 </tr>
+
+             {% endfor %}
+             <div class="navigation">
+                 {{ knp_pagination_render(rec) }}
+             </div>
+
+
+
+         {% endblock %}
+
+
+

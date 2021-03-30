@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block title %}Formation index{% endblock %}
+
+{% block content %}
+
+    <h1>Formation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Periode</th>
+                <th>Objectif</th>
+                <th>Duree</th>
+                <th>Capacite</th>
+                <th>Rating</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td>{{ formation.id }}</td>
+                <td>{{ formation.reference }}</td>
+                <td>{{ formation.periode }}</td>
+                <td>{{ formation.objectif }}</td>
+                <td>{{ formation.duree }}</td>
+                <td>{{ formation.capacite }}</td>
+                <td>{{ formation.rating }}</td>
+                <td>
+                    <a href="{{ path('formation_show', {'id': formation.id}) }}">show</a>
+                    <a href="{{ path('formation_edit', {'id': formation.id}) }}">edit</a>
+                    <a href="{{ path('formation_show', {'id': formation.id}) }}">Participer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(formations) }}
+    </div>
+
+    <a href="{{ path('formation_new') }}">Create new</a>
+
+
+{% endblock %}
+
+    {% block script %}
+        <script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/util.js') }}"></script>
+        <script src="{{ asset('../assets/js/main.js') }}"></script>
+    {% endblock %}

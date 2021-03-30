@@ -1,0 +1,59 @@
+
+
+{% extends 'base.html.twig' %}
+{% block title %} Recruteur index{% endblock %}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+{%endblock %}
+{% block content %}
+    <h1>Recruteur index</h1>
+    <form method="POST">
+        <input type="text" name="Recherche">
+        <button type="submit" >Recherche</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Domaine</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recruteur in recruteurs %}
+            <tr>
+                <td>{{ recruteur.id }}</td>
+                <td>{{ recruteur.nom }}</td>
+                <td>{{ recruteur.prenom }}</td>
+                <td>{{ recruteur.domaine }}</td>
+                <td>
+                    <a href="{{ path('recruteur_show', {'id': recruteur.id}) }}">show</a>
+                    <a href="{{ path('recruteur_edit', {'id': recruteur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('recruteur_new') }}">Create new</a>
+{% endblock %}
+{% block script %}
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/jquery.scrollex.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+{% endblock %}

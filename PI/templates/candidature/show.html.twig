@@ -1,0 +1,29 @@
+
+{% block title %}Candidature{% endblock %}
+
+{% block body %}
+    <h1>Candidature</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ candidature.id }}</td>
+            </tr>
+            <tr>
+                <th>Date_candidature</th>
+                <td>{{ candidature.dateCandidature ? candidature.dateCandidature|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Pdf</th>
+                <td>{{ candidature.Pdf }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('candidature_index') }}">back to list</a>
+
+    <a href="{{ path('candidature_edit', {'id': candidature.id}) }}">edit</a>
+
+    {{ include('candidature/_delete_form.html.twig') }}
+{% endblock %}

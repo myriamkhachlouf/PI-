@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GrilleEvaluation{% endblock %}
+
+{% block content %}
+    <h1>GrilleEvaluation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ grille_evaluation.id }}</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td>{{ grille_evaluation.commentaire }}</td>
+            </tr>
+            <tr>
+                <th>Admission</th>
+                <td>{{ grille_evaluation.admission ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('grille_evaluation_index') }}">back to list</a>
+
+    <a href="{{ path('grille_evaluation_edit', {'id': grille_evaluation.id}) }}">edit</a>
+
+    {{ include('grille_evaluation/_delete_form.html.twig') }}
+{% endblock %}

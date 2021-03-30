@@ -1,0 +1,29 @@
+{% extends 'reclamation/index.html.twig' %}
+
+
+    {% block body %}
+    {% endblock %}
+{% block content %}
+        <div class="container">
+
+            <center><h1>Les Entreprises</h1></center>
+            {% for u in users %}
+
+                {% for role in u.roles %}
+
+                    {% if role == "ROLE_ENTREPRISE" and u!=ap %}
+
+                        <b>Nom: </b>{{ u.nom }} <br>
+                        <b> </b>
+                        <a class="btn btn-light" href="{{ path('newentreprise',{ 'id':u.id }) }}">Réclamer</a><br>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            {% endfor %}
+
+        </div>
+
+
+    {% endblock %}

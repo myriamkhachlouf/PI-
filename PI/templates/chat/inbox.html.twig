@@ -1,0 +1,264 @@
+{% extends 'tables.html.twig' %}
+
+
+{% block content1 %}
+
+    <div class="container">
+        <h3 class=" text-center">Messaging</h3>
+        <div class="messaging" >
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="recent_heading">
+                            <h4>Recent</h4>
+                        </div>
+                    </div>
+                    <div class="inbox_chat" style="color: white">
+                        {% for inbox in inboxs %}
+                        {% set lastmsg = inbox.getMessages()|last %}
+                        {% set chatwith = null %}
+                        {% for u in inbox.getUsers() %}
+                            {% if u != app.user %}
+                                {% set chatwith = u %}
+                            {% endif %}
+                        {% endfor %}
+                        <a href="{{ path('my_inbox', {'id': inbox.id}) }}">
+                            {% if current == inbox %}
+                            <div class="chat_list active_chat">
+                                {% else %}
+                                <div class="chat_list">
+                                    {% endif %}
+                                    <div class="chat_people">
+                                        <div class="chat_img">
+                                            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                                        </div>
+                                        <div class="chat_ib">
+                                            <h5>{{ chatwith.nom }}
+                                                {% if lastmsg != false %}
+                                                    <span class="chat_date"> {{ lastmsg.getSentAt() ? lastmsg.getSentAt|date('Y-m-d H:i') : '' }}</span>
+                                                {% endif %}
+                                            </h5>
+                                            {% if lastmsg != false %}
+                                                <p>{{ lastmsg.content }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+
+
+                    {# <div class="chat_list">
+							<div class="chat_people">
+								<div class="chat_img">
+									<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+								</div>
+								<div class="chat_ib">
+									<h5>Sunil Rajput
+										<span class="chat_date">Dec 25</span>
+									</h5>
+									<p>Test, which is a new approach to have all solutions 
+																						                    astrology under one roof.</p>
+								</div>
+							</div>
+						</div>
+						<div class="chat_list">
+							<div class="chat_people">
+								<div class="chat_img">
+									<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+								</div>
+								<div class="chat_ib">
+									<h5>Sunil Rajput
+										<span class="chat_date">Dec 25</span>
+									</h5>
+									<p>Test, which is a new approach to have all solutions 
+																						                    astrology under one roof.</p>
+								</div>
+							</div>
+						</div>
+						<div class="chat_list">
+							<div class="chat_people">
+								<div class="chat_img">
+									<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+								</div>
+								<div class="chat_ib">
+									<h5>Sunil Rajput
+										<span class="chat_date">Dec 25</span>
+									</h5>
+									<p>Test, which is a new approach to have all solutions 
+																						                    astrology under one roof.</p>
+								</div>
+							</div>
+						</div>
+						<div class="chat_list">
+							<div class="chat_people">
+								<div class="chat_img">
+									<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+								</div>
+								<div class="chat_ib">
+									<h5>Sunil Rajput
+										<span class="chat_date">Dec 25</span>
+									</h5>
+									<p>Test, which is a new approach to have all solutions 
+																						                    astrology under one roof.</p>
+								</div>
+							</div>
+						</div>
+						<div class="chat_list">
+							<div class="chat_people">
+								<div class="chat_img">
+									<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+								</div>
+								<div class="chat_ib">
+									<h5>Sunil Rajput
+										<span class="chat_date">Dec 25</span>
+									</h5>
+									<p>Test, which is a new approach to have all solutions 
+																						                    astrology under one roof.</p>
+								</div>
+							</div>
+						</div>
+						<div class="chat_list">
+							<div class="chat_people">
+								<div class="chat_img">
+									<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+								</div>
+								<div class="chat_ib">
+									<h5>Sunil Rajput
+										<span class="chat_date">Dec 25</span>
+									</h5>
+									<p>Test, which is a new approach to have all solutions 
+																						                    astrology under one roof.</p>
+								</div>
+							</div>
+						</div> #}
+
+
+                </div>
+            </div>
+            <div class="mesgs">
+                {% if current == null %}
+                    <h4 class="container mt-5 mb-5">Select a Conversation to see the msgs.</h4>
+                {% else %}
+                    <div class="msg_history">
+                        {% for msg in current.getMessages() %}
+                            {% if msg.getIsTo() == app.user %}
+                                <div class="incoming_msg">
+                                    <div class="received_msg">
+                                        <div class="received_withd_msg">
+                                            <p>{{ msg.content }}</p>
+                                            <span class="time_date">{{ msg.getSentAt() ? msg.getSentAt|date('Y-m-d H:i') : '' }} </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="outgoing_msg">
+                                    <div class="sent_msg">
+                                        <p>{{ msg.content }}</p>
+                                        <span class="time_date">{{ msg.getSentAt() ? msg.getSentAt|date('Y-m-d H:i') : '' }} </span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <h5 class="container mt-5 mb-5" id="empty">Ma fama hata msg fel conversation yet.</h5>
+                        {% endfor %}
+
+                        <div id="insert_above"></div>
+
+                    </div>
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <input type="text" class="write_msg" id="content_msg" placeholder="Type a message"/>
+                            <button disabled="disabled" id="send_msg" class="msg_send_btn">
+                                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <p class="text-center top_spac">
+            Design by
+            <a target="_blank" href="https://www.linkedin.com/in/sunil-rajput-nattho-singh/">Sunil Rajput</a>
+        </p>
+
+    </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {% set otherpersonID = null %}
+    {% if otherperson != null %}
+        {% set otherpersonID = otherperson.getId() %}
+    {% endif %}
+    {% set currentID = null %}
+    {% if current != null %}
+        {% set currentID = current.getId() %}
+    {% endif %}
+    <script>
+        $("#send_msg").click(function (event) {
+            event.preventDefault();
+
+            axios.post('/sendmessage/' + '{{ otherpersonID }}', {
+                'content': $("#content_msg").val(),
+                'converID': '{{ currentID }}'
+            })
+                .then(response => {
+                    if (response.data.code == 400) {
+                        alert("You Cant send an empty msg !");
+                    } else {
+                        if ($("#empty") != null) {
+                            $("#empty").remove();
+                        }
+                        $('<div class="outgoing_msg"><div class="sent_msg"><p> ' + response.data.message.content + '</p><span class="time_date">' + response.data.message.sentAt + ' </span></div></div>')
+                            .insertBefore("#insert_above");
+                    }
+                }).catch(function (error) {
+                window.alert("Oups an unexpected error has occurred.");
+            });
+            $("#content_msg").val('');
+        });
+    </script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            fetch('/discover').then(result => {
+
+                const hubUrl = result.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1];
+
+                let url = new URL(hubUrl);
+                url.searchParams.append('topic', 'msgsFor' + "{{ app.user.id }}");
+                const eventSource = new EventSource(url);
+
+                eventSource.onmessage = (event) => {
+                    var message = JSON.parse(event.data).message;
+                    $('<div class="incoming_msg"><div class="received_msg"><div class="received_withd_msg"><p>' + message.content + '</p><span class="time_date">' + message.sentAt + ' </span></div></div></div>')
+                        .insertBefore("#insert_above");
+                }
+            })
+
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#content_msg').on('keyup', function () {
+                let empty = false;
+                let msg = $('#content_msg').val().trim();
+
+                if (msg.length == 0) {
+                    empty = true;
+                }
+
+                if (empty)
+                    $('#send_msg').attr('disabled', 'disabled');
+                else
+                    $('#send_msg').attr('disabled', false);
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'reclamation/index.html.twig' %}
+
+
+    {% block body %}
+    {% endblock %}
+{% block content %}
+        <div class="container">
+
+            <center><h1>Les Formations</h1></center>
+            {% for f in formations %}
+
+
+
+                        <b>Nom: </b>{{ f.nom }} <br>
+                        <b> </b>
+                        <a class="btn btn-light" href="{{ path('newformation',{ 'id':f.id }) }}">Réclamer</a><br>
+
+
+
+            {% endfor %}
+
+        </div>
+
+
+    {% endblock %}

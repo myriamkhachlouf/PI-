@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <h1 align="center">Liste des evenements</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Email</th>
+            <th>Logo</th>
+            <th>Date</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td>{{ evenement.id }}</td>
+                <td>{{ evenement.nom }}</td>
+                <td>{{ evenement.description }}</td>
+                <td>{{ evenement.email }}</td>
+                <td>{{ evenement.logo }}</td>
+                <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('evenement_new') }}">Create new</a>
+{% endblock %}

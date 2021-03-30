@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <form method="POST">
+        <input type="text" name="Recherche">
+        <button type="submit" >Recherche</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Statut</th>
+                <th>Typecontrat</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formateur in formateurs %}
+            <tr>
+                <td>{{ formateur.id }}</td>
+                <td>{{ formateur.nom }}</td>
+                <td>{{ formateur.prenom }}</td>
+                <td>{{ formateur.statut }}</td>
+                <td>{{ formateur.typecontrat }}</td>
+                <td>{{ formateur.email }}</td>
+                <td>
+                    <a href="{{ path('formateur_show', {'id': formateur.id}) }}">show</a>
+                    <a href="{{ path('formateur_edit', {'id': formateur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('formateur_new') }}">Create new</a>
+
+
+
+{% endblock %}
+
+    {% block script %}
+        <script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+        <script src="{{ asset('../assets/js/util.js') }}"></script>
+        <script src="{{ asset('../assets/js/main.js') }}"></script>
+    {% endblock %}

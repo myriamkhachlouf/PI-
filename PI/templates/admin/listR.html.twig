@@ -1,0 +1,87 @@
+{% extends 'tables.html.twig' %}
+
+{% block title %} Liste des reclamations {% endblock %}
+ {% block content %}
+     <div class="card-header">
+         <h4 class="card-title"> Les reclamations</h4>
+     </div>
+ {% endblock %}
+{% block th %}
+
+    <th> Réclamation de la part</th>
+    <th>Réclamation contre</th>
+    <th>Description</th>
+    <th>Date de reclamation</th>
+    <th>Etat</th>
+    <th>Image</th>
+    <th>Objet</th>
+    <th>Passer en jugement </th>
+{% endblock %}
+         {% block td %}
+             {% for reclamation in rec %}
+                 {% if  reclamation.etat!="Archivée" %}
+                 <tr>
+
+                     <td>{{ reclamation.user.nom}}</td>
+                     {% if  reclamation.targetf!=null %}
+                         <td ><span class="label label-primary"> Formation:<br>
+                                 {{ reclamation.targetf.nom }}</span>
+                         </td>
+                     {% endif %}
+                     {% if  reclamation.target!=null %}
+                         <td ><span class="label label-success">User:<br>{{ reclamation.target }}</span>
+
+                         </td>
+                     {% endif %}
+                     <td>{{ reclamation.description }}</td>
+                     <td>{{ reclamation.date | date ('Y-m-d H:i:s') }}</td>
+
+
+                     {% if  reclamation.etat=="Traitée" %}
+                         <td ><span class="label label-success">{{ reclamation.etat }}</span></td>
+                     {% endif %}
+                     {% if reclamation.etat=="En attente" %}
+                         <td><span class="label label-danger">{{ reclamation.etat }}</span></td>
+                     {% endif %}
+                     <td><img style="margin-bottom: -18px" src="{{ asset('uploads/' ~ reclamation.image) }}" width="200" height="100"></td>
+                     <td>{{ reclamation.objet }}</td>
+
+                     {% if  reclamation.target_id!=0 %}
+                         <td>
+                             {{ render(controller('App\\Controller\\AdminController::ScoreAction',{'id': reclamation.target_id})) }}
+                         </td>
+                     {% endif %}
+
+
+                     {% if  reclamation.target_idf!=0 %}
+                         <td>
+                             {{ render(controller('App\\Controller\\AdminController::jugformationAction',{'id': reclamation.target_idf})) }}
+
+                         </td>
+                     {% endif %}
+                     <td> <div class="btn-group">
+                             <button class="btn btn btn-warning btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action
+                             </button>
+                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                 <span class="caret"></span>
+                                 <a class="dropdown-item" type="button" href="{{ path('admin_traiter_reclamation',{'id': reclamation.id}) }}">Traiter</a>
+
+                             </div>
+
+                         </div>
+
+                     </td>
+                 </tr>
+                 {% endif %}
+             {% endfor %}
+             <div class="navigation">
+                 {{ knp_pagination_render(rec) }}
+             </div>
+
+             {#             <a href="{{ path('admin_users_list') }}">Imprimer</a>#}
+             <i class="fa fa-tripadvisor "> <a href="{{ path('admin_show_archive') }}" class="btn btn-warning">Consulter Archive</a></i>
+         {% endblock %}
+
+
+

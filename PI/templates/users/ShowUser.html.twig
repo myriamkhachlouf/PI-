@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Show user{% endblock %}
+   {% block stylesheet %}
+       <meta charset="utf-8" />
+       <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+       <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+       <link rel="stylesheet" href="assets/css/main.css" />
+       <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+   {%endblock %}
+{% block content %}
+
+
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+    <th>Nom</th>
+    <th>Email</th>
+    <th>Telephone</th>
+    <th>Adresse</th>
+    <th>Domaine</th>
+        <th>Actions</th>
+    </tr>
+    <tr>
+        <td>{{ user.id }}</td>
+    <td>{{ user.nom }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.telephone }}</td>
+    <td>{{ user.adresse }}</td>
+    <td>{{ user.domaine }}</td>
+    <td>
+        <a href="{{ path('modifier_utilisateur', {'id': user.id}) }}">Modifier</a>
+        <a href="{{ path('app_logout') }}">Logout</a>
+    </td>
+    </tr>
+</table>
+{% endblock %}
+
+
+{% block script %}
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+{% endblock  %}

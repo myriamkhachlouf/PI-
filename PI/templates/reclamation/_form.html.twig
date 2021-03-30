@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<label> Are you a robot ? </label>
+    {{ form_row(form.captchaCode) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

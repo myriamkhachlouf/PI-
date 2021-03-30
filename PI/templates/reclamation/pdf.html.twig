@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<div class="col-lg-3 col-md-3 col-sm-12 title-area">
+
+
+    <h4>
+
+
+        {#    <img src="{{ webp }}img/{{ 'logofixit.png' }}" alt="author" style="width: 20%;">#}
+
+    </h4>
+
+</div>
+<center><h1><u>Réclamation</u></h1></center>
+<br>
+<br>
+<br>
+
+
+<body>
+
+<h4>Cher membre </h4>
+La réclamation a été bien effectuée dans notre pateforme. <br>
+Nous sommes désolés  de cet incident et nous vous prions de bien vouloir nous en excuser.<br>
+Nous tenons à vous remercier de votre confiance et à vous assurer que nous
+prenons des mesures pour que ce problème ne se reproduise plus.
+
+
+<h4><u>Details de la réclamation :</u></h4> <br>
+
+{#<b>Au nom :</b> {{app.user.username() }}<br><br>#}
+<b>Nature de réclamation :</b> {{ rec.description }}<br><br>
+<b>La Date de réclamation :</b> {{ rec.dateRec ? rec.dateRec|date('Y-m-d') : '' }}<br><br>
+
+<b>État de réclamation :</b> {{rec.etat  }}
+<br><br>
+
+
+
+
+
+
+</body>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+<hr>
+<b>.Khedmtech.</b>
+
+
+
+</html>

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/main.css')}}" />
+    <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css')}}" /></noscript>
+{%endblock %}
+{% block title %}New Reclamation{% endblock %}
+
+{% block content %}
+    <h1> Ajouter une reclamation</h1>
+
+    {{ include('reclamation/_form.html.twig') }}
+
+    <a href="{{ path('reclamation_index') }}">back to list</a>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('../assets/js/jquery.min.js')}}"></script>
+    <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrolly.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrollex.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/browser.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/breakpoints.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/util.js')}}"></script>
+    <script src="{{ asset('../assets/js/main.js')}}"></script>
+{% endblock %}
+
+

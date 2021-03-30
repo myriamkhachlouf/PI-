@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/main.css')}}" />
+    <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css')}}" /></noscript>
+{% endblock %}
+ {% block body %}
+ {% endblock %}
+{% block content %}
+
+    <div id="main" class="alt">
+
+        <!-- One -->
+        <section id="one">
+            <div class="inner">
+                <header class="major">
+                    <h1>Mes reclamations</h1>
+                </header>
+
+            </div>
+        </section>
+
+    </div>
+
+	  <section>
+
+    <form class="form-inline" method="get" action="#">
+        <input class="form-control mr-sm-2" type="text" placeholder="Rechercher" aria-label="Search"  id="search">
+
+        {#        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Rechercher</button>#}
+    </form>
+    <a href="{{path('trier_index')}}">Trier par date</a>
+    <table class="table">
+        <thead>
+        <tr>
+
+
+            <th>Description</th>
+            <th>Date de reclamation</th>
+            <th>Etat</th>
+            <th>Image</th>
+            <th>Objet</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody id="all">
+        {% for reclamation in reclamations %}
+            <tr>
+
+                <td>{{ reclamation.description }}</td>
+                <td>{{ reclamation.date | date ('Y-m-d H:i:s') }}</td>
+                <td>{{ reclamation.etat }}</td>
+                <td><img style="margin-bottom: -18px" src="{{ asset('uploads/' ~ reclamation.image) }}" width="200" height="100"></td>
+                <td>{{ reclamation.objet }}</td>
+                <td>
+                    <a href="{{ path('reclamation_show', {'id': reclamation.id}) }}">Afficher</a>
+                    <a href="{{ path('reclamation_edit', {'id': reclamation.id}) }}">Modifier</a>
+                    <a href="{{ path('reclamation_pdf', {'id': reclamation.id}) }}">Télècharger en PDF</a>
+                </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        <div class="navigation">
+            {{ knp_pagination_render(reclamations) }}
+        </div>
+        </tbody>
+        <tbody id="search">
+        </tbody>
+
+    </table>
+
+
+
+    </section>
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('../assets/js/jquery.min.js')}}"></script>
+    <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrolly.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrollex.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/browser.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/breakpoints.min.js')}}"></script>
+    <script src="{{ asset('../assets/js/util.js')}}"></script>
+    <script src="{{ asset('../assets/js/main.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#search").keyup(function(e){
+                /* La variable value va prendre la valeur insérer dans le champ de texte afin d’effectuer la recherche */
+                var value = $(this).val();
+        /* Ajax est lancé lors du remplissage du champ texte dont l’id est « search » pour faire la recherche */
+                $.ajax({
+                    /* l’url est une chaine de caractères contenant l’adresse où la requête est envoyée */
+                    url : "http://127.0.0.1:8000/reclamation/SearchByEtat",
+                    /* La méthode utilisée pour transférer les données est GET */
+                    type : 'GET',
+                    /*Ici search value va prendre la chaine entrée par un utilisateur dans la zone de recherche et sera placée après l’url */
+                    data: {
+                        'searchValue' : value
+                    },
+                    /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                    success : function(retour)
+                    {
+                        console.log(retour)
+                        if(retour){
+                            $('#t tbody#search').empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $('#t tbody#all').hide();
+                                $('#t tbody#search').append('<tr><td> '+obj.id+'  </td> <td>'+obj.type+'  </td> <td>'+obj.description+'</td><td>'+obj.dateRec+'</td><td>'+obj.image+' </td> <td>'+obj.objet+' </td> <td><a href="reclamation_show/'+obj.id+'">Afficher</a> <a href="reclamation_edit/'+obj.id+'">Modifier</a> <a href="reclamation_pdf/'+obj.id+'"> Télècharger en PDF</a></td></tr>');
+                            });
+                        }
+                        else
+                        {
+                            $('#t tbody#all').show();
+                            $('#t tbody#search').empty();
+                            $('#t tbody#search').fadeIn('fast');
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+
+{% endblock %}

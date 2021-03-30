@@ -1,0 +1,37 @@
+
+<a href="" class="tooltip-test" data-placement="top" title="" data-toggle="modal" data-target="#exampleModal{{ coupon.id }}">
+    <span class="fa fa-edit" aria-hidden="true"></span> Juger</a>
+<div class="modal fade" id="exampleModal{{ coupon.id  }}"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <br><br><br>
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title" id="exampleModalLabel">PASSER EN JUGEMENT :</h4>
+                    </div>
+                    <div class="modal-body">
+
+                            {{ form_start(edit_form) }}
+
+
+                        <div class="form-group">
+                            <label for="recipient-name" class="form-control-label" style="color: black;" >Score :</label>
+                            {{ form_widget(edit_form.score,{'attr':{'class':'form-control',"style":"color: black;"}} ) }}
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer" >
+                        <div align="center">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Annuler</button>
+                        {{ form_widget(edit_form.submit,{'attr':{'class':'btn btn-warning'}}) }}
+                    </div>
+                    </div>
+                    {{ form_rest(edit_form) }}
+                    {{ form_end(edit_form) }}
+
+                </div>
+            </div>
+
+
+</div>

@@ -1,0 +1,238 @@
+
+<head>
+    {% block title%}
+        <title>Offre index</title>
+    {%endblock %}
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('/assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/assets/css/main.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('/assets/css/noscript.css') }}" /></noscript>
+</head>
+<body class="is-preload">
+
+</form>
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/first" class="logo"><strong>Job Agency</strong> <span>Website</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            <li class="active"> <a href="{{ path('app_login') }}">Sign in </a> </li>
+            <li> <a href="{{ path('app_register',{'role':'ROLE_CANDIDAT'}) }}">sign up as candidat</a> </li>
+            <li> <a href="{{ path('app_register',{'role':'ROLE_ENTREPRISE'})}}">sign up as entreprise</a> </li>
+            <li> <a href="{{ path('admin_utilisateurs')}}">Espace administrateur</a> </li>
+            <li class="active"> <a href="/first">Home </a> </li>
+
+            <li><a href="{{ path('formateur_new') }}">Gérer formateur</a></li>
+
+            <li> <a href="{{ path('offre_index') }}">Les Offres</a> </li>
+
+            <li> <a href="/about">About Us</a> </li>
+
+            <li> <a href="{{ path('formation_new') }}">Gérer formation</a></li>
+
+            <li> <a href="{{ path('evenement_new') }}">Gérer evenement</a></li>
+
+            <li><a href="/terms">Terms</a></li>
+            <li><a href="#">Réclamation :</a>
+
+                {% if is_granted('ROLE_CANDIDAT') %}
+                    <ul> <li> <a  href="{{ path('listedescandidats') }}">Réclamer Un Candidat</a></li></ul>
+                    <ul> <li> <a  href="{{ path('listedesentreprises') }}">Réclamer Une Entreprise</a></li></ul>
+                    <ul> <li> <a  href="{{ path('listedesformations') }}">Réclamer Une Formation</a></li></ul>
+                {% endif %}
+                {% if is_granted('ROLE_ENTREPRISE') %}
+                    <ul> <li> <a  href="{{ path('listedescandidats') }}">Réclamer Un Candidat</a></li></ul>
+                    {#                    <ul> <li> <a  href="{{ path('listedesentreprises') }}">Réclamer Une Entreprise</a></li></ul>#}
+                {% endif %}
+
+
+
+
+            </li>
+            <li> <a href="{{ path('reclamation_index') }}">Mes reclamations</a> </li>
+
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Banner -->
+    <section id="banner" class="major">
+        <div class="inner">
+            <header class="major">
+                <h1>Lorem ipsum dolor sit amet isicing</h1>
+            </header>
+            <div class="content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos, libero!</p>
+                <ul class="actions">
+                    <li><a href="/contact" class="button next scrolly">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main -->
+    <div id="main">
+
+
+        <!-- About us -->
+        <section>
+            <div class="inner">
+                <header class="major">
+                    <h2>About us</h2>
+                </header>
+                <p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus.</p>
+                <ul class="actions">
+                    <li><a href="/about" class="button next">Read more</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Featured Jobs -->
+        <a class="button next" href="{{ path('candidature_new') }}">Create new</a>
+        <section class="tiles">
+
+            {% block body %}
+
+                 {% for candidature in candidatures %}
+                    <article>
+                        <header class="major">
+                            <p>
+                                {% for offres in offres %}
+                                {% if offres==candidature.offre %}
+                                <i class="fa fa-calendar"></i> {{ candidature.dateCandidature ? candidature.dateCandidature|date('Y-m-d') : '' }} &nbsp;&nbsp;
+                                <i class="fa fa-file"></i>  &nbsp;&nbsp;{{ offres.nomOffre}}
+
+                            </p>
+
+
+                            <h3>{{ candidature.id }}</h3>
+                            {% endif %}
+                            {% endfor %}
+                            <div class="major-actions">
+                                <a class="button small next" href="{{ path('candidature_show', {'id': candidature.id}) }}">show</a>
+                                <a class="button small next" href="{{ path('candidature_edit', {'id': candidature.id}) }}">edit</a>
+                            </div>
+                        </header>
+                    </article>
+
+
+
+
+                {% endfor %}
+
+            {% endblock %}
+
+        </section>
+
+        <!-- Testimonials -->
+        <section>
+            <div class="inner">
+                <header class="major">
+                    <h2>Testimonials</h2>
+                </header>
+                <div class="row">
+                    <div class="col-6">
+                        <p><em>"Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt."</em></p>
+                        <p><strong>- John Doe</strong></p>
+
+                    </div>
+
+                    <div class="col-6">
+                        <p><em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores temporibus dolorum minus repudiandae, eaque error corporis aliquam, architecto amet itaque nobis. Omnis itaque est dolore, a nostrum numquam. Quae, facilis."</em></p>
+                        <p><strong>- Jack Smith</strong></p>
+                    </div>
+                </div>
+                <ul class="actions">
+                    <li><a href="/testimonials" class="button next">Read more</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Blog Posts -->
+        <section class="tiles">
+            <article>
+							<span class="image">
+								<img src="images/blog-1-720x480.jpg" alt="" />
+							</span>
+                <header class="major">
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit hic</h3>
+
+                    <p><br> <span>John Doe</span> | <span>12/06/2020 10:30 </span> | <span>114</span></p>
+
+                    <div class="major-actions">
+                        <a href="/blogdetails" class="button small next scrolly">Read Blog</a>
+                    </div>
+                </header>
+            </article>
+            <article>
+							<span class="image">
+								<img src="images/blog-2-720x480.jpg" alt="" />
+							</span>
+                <header class="major">
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit hic</h3>
+
+                    <p><br> <span>John Doe</span> | <span>12/06/2020 10:30 </span> | <span>114</span></p>
+
+                    <div class="major-actions">
+                        <a href="/blogdetails" class="button small next scrolly">Read Blog</a>
+                    </div>
+                </header>
+            </article>
+            <article>
+							<span class="image">
+								<img src="{{ asset('images/blog-3-720x480.jpg') }}" alt="" />
+							</span>
+                <header class="major">
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit hic</h3>
+
+                    <p><br> <span>John Doe</span> | <span>12/06/2020 10:30 </span> | <span>114</span></p>
+
+                    <div class="major-actions">
+                        <a href="/blogdetails" class="button small next scrolly">Read Blog</a>
+                    </div>
+                </header>
+            </article>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>Copyright © 2020 Company Name - Template by:</li>
+                <li> <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.scrolly.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.scrollex.min.js') }}"></script>
+<script src="{{ asset('assets/js/browser.min.js') }}"></script>
+<script src="{{ asset('assets/js/breakpoints.min.js') }}"></script>
+<script src="{{ asset('assets/js/util.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+</body>

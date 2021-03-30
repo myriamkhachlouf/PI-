@@ -1,0 +1,30 @@
+{% extends 'reclamation/index.html.twig' %}
+
+
+    {% block body %}
+    {% endblock %}
+{% block content %}
+    <div class="container">
+
+        <center><h1>Les Candidats</h1></center>
+
+        {% for u in users %}
+
+
+
+                {% if "ROLE_CANDIDAT" in u.getRoles() and u!=ap %}
+
+            <b>Nom: </b>{{ u.nom }} <br>
+            <b> </b>
+            <a class="btn btn-light" href="{{ path('newcandidat',{ 'id':u.id }) }}">Réclamer</a><br>
+                {% endif %}
+
+
+
+
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('assets/css/noscript.css') }}" /></noscript>
+{%endblock %}
+{% block content %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'D:/projects/wamp64/www/de0/NouveauPI/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'D:/projects/wamp64/www/de0/NouveauPI/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{asset('assets/bootstrap/js/bootstrap.bundle.min.js')  }}"></script>
+    <script src="{{asset('assets/js/jquery.scrolly.min.js')  }}"></script>
+    <script src="{{asset('assets/js/jquery.scrollex.min.js')  }}"></script>
+    <script src="{{asset('assets/js/browser.min.js')  }}"></script>
+    <script src="{{asset('assets/js/breakpoints.min.js')  }}"></script>
+    <script src="{{asset('assets/js/util.js')  }}"></script>
+    <script src="{{asset('assets/js/main.js')  }}"></script>
+{% endblock  %}

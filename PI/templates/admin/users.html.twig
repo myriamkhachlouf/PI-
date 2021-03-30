@@ -1,0 +1,50 @@
+{% extends 'tables.html.twig' %}
+
+{% block title %} Liste des utilisateurs {% endblock %}
+
+{% block th %}
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Adresse</th>
+            <th>Domaine</th>
+            <th>Roles</th>
+  {% endblock %}
+      {% block td %}
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.domaine }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        {% if role=="ROLE_ADMIN"%}
+                        Administrateur
+                        {% elseif role=="ROLE_CANDIDAT"%}
+                        Candidat
+                        {% elseif role=="ROLE_ENTREPRISE"%}
+                        Entreprise
+                            {% endif %}
+                    {% endfor %}
+                </td>
+                <td><a href="{{ path('admin_modifier_utilisateurs', {'id': user.id}) }}" class="btn btn-warning">Modifier</a> </td>
+
+
+                {# <td>{{ user.roles }}</td> #}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+             <a href="{{ path('admin_users_list') }}">Imprimer</a>
+
+             {{ knp_pagination_render(users) }}
+      {% endblock %}
+
+
+

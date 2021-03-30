@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien index{% endblock %}
+
+{% block content %}
+    <h1>Entretien index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Horaire</th>
+                <th>Lieu</th>
+                <th>Confirmation</th>
+                <th>Etat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entretien in entretiens %}
+            <tr>
+                <td>{{ entretien.id }}</td>
+                <td>{{ entretien.date ? entretien.date|date('Y-m-d') : '' }}</td>
+                <td>{{ entretien.horaire ? entretien.horaire|date('H:i:s') : '' }}</td>
+                <td>{{ entretien.lieu }}</td>
+                <td>{{ entretien.confirmation ? 'Yes' : 'No' }}</td>
+                <td>{{ entretien.etat ? 'Yes' : 'No' }}</td>
+
+                <td>
+                    {% if entretien.etat==1 %}
+                        <a href="{{ path('grille_evaluation_new', {'id': entretien.id}) }}">Evaluer</a>
+                    {%endif %}
+                    <a href="{{ path('entretien_show', {'id': entretien.id}) }}">show</a>
+                    <a href="{{ path('entretien_edit', {'id': entretien.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(entretiens) }}
+    </div>
+    <a href="{{ path('entretien_new') }}">Create new</a>
+    <a href="{{ path('trier_index') }}">trier par date</a>
+
+{% endblock %}
