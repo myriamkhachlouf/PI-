@@ -19,6 +19,18 @@ class GrilleEvaluationRepository extends ServiceEntityRepository
         parent::__construct($registry, GrilleEvaluation::class);
     }
 
+    public function test()
+    {
+        return $this->createQueryBuilder('e')
+            ->Where('e.commentaire LIKE :val')
+            ->OrWhere('e.commentaire LIKE :val1')
+            ->setParameter('val', '%con%')
+            ->setParameter('val1', '%putain%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return GrilleEvaluation[] Returns an array of GrilleEvaluation objects
     //  */
@@ -35,6 +47,7 @@ class GrilleEvaluationRepository extends ServiceEntityRepository
         ;
     }
     */
+
 
     /*
     public function findOneBySomeField($value): ?GrilleEvaluation

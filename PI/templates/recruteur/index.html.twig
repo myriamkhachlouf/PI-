@@ -15,6 +15,7 @@
         <input type="text" name="Recherche">
         <button type="submit" >Recherche</button>
     </form>
+
     <table class="table">
         <thead>
             <tr>
@@ -45,7 +46,33 @@
         </tbody>
     </table>
 
-    <a href="{{ path('recruteur_new') }}">Create new</a>
+    <div class="content">
+
+        <div style="text-align: center; margin-left: 600px">
+            <form role="search" id="nav-search-form" method="post" action="{{ path('recruteur_new') }}">
+
+
+                <div style="width: 300px; margin: 0 auto class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+                <div style="width: 300px; margin: 0 auto class="btn-group btn-group-sm" aria-label="Set Select2 option">
+                <button  class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1">
+                    Ajouter Un Recruteur
+                </button>
+
+        </div>
+
+    </div>
+    <div class="content">
+
+        <div style="text-align: center; margin-left: 600px">
+
+                <a class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1" href="{{ path('tri_nom') }}">trier par ordre alphabetique</a>
+
+
+
+        </div>
+    </div>
+
+
 {% endblock %}
 {% block script %}
     <script src="../assets/js/jquery.min.js"></script>

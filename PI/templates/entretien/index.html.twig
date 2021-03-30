@@ -4,6 +4,14 @@
 
 {% block content %}
     <h1>Entretien index</h1>
+    <i class="fa fa-map-marker"></i> <span id="location"></span>
+    <span > :</span>
+    <span id="weather"></span>
+    <div></div>
+    <span >T°  :</span>
+    <span id="temp"></span>
+    <span >C°</span>
+    <img src="" id="icon">
 
     <table class="table">
         <thead>
@@ -41,6 +49,24 @@
             </tr>
         {% endfor %}
         </tbody>
+        <script tyep="text/javascript ">
+            link = "{{ asset('https://api.openweathermap.org/data/2.5/weather?q=tunis&appid=443c9b451217a0bf6b010ae1cc646941') }}";
+            var request = new XMLHttpRequest();
+            request.open('GET',link,true);
+            request.onload = function() {
+                var obj = JSON.parse(this.response);
+                console.log(obj);
+                document.getElementById('weather').innerHTML = obj.weather[0].description;
+                document.getElementById('location').innerHTML = obj.name;
+                document.getElementById('temp').innerHTML = obj.main.temp - 273.15;
+                document.getElementById('icon').src = "http://openweathermap.org/img/w/" + obj.weather[0].icon + ".png";
+            }
+            if(request.status==200){
+                console.log("ERROR");
+            }
+            request. send();
+        </script>
+
     </table>
     <div class="navigation">
         {{ knp_pagination_render(entretiens) }}

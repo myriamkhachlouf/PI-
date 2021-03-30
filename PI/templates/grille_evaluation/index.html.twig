@@ -2,8 +2,9 @@
 {% block title %} Grille index{% endblock %}
 {% block content %}
     <h1>GrilleEvaluation index</h1>
-
-    <table class="table">
+    <script src="{{ asset('jquery.min.js') }}"></script>
+    <input type="search" class="form-control form-control-sm" placeholder="rechercher" aria-controls="dataTables-example" id="search">                </div>
+    <table class="table" id="tableac">
         <thead>
             <tr>
                 <th>Id</th>
@@ -28,8 +29,38 @@
                 <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
+        <script>
+            $(document).ready(function(){
+                $('#search').keyup(function(){
+                    search_table($(this).val());
+                });
+                function search_table(value){
+                    $('#tableac tbody tr').each(function(){
+                        var found = 'false';
+                        $(this).each(function(){
+                            if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                            {
+                                found = 'true';
+                            }
+                        });
+                        if(found == 'true')
+                        {
+                            $(this).show();
+
+                        }
+                        else
+                        {
+                            $(this).hide();
+
+                        }
+                    });
+                }
+            });
+        </script>
         </tbody>
     </table>
+
+
 
 
 

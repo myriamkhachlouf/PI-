@@ -15,6 +15,31 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RecruteurController extends AbstractController
 {
+
+    /**
+     * @Route("/tri", name="tri_nom")
+     */
+    public function TriAction(Request $request)
+    {
+
+
+
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT e FROM App\Entity\Recruteur e
+    ORDER BY e.nom ASC');
+
+
+
+        $recruteurs = $query->getResult();
+
+        return $this->render('recruteur/index.html.twig', array(
+            'recruteurs' => $recruteurs));
+
+    }
+
+
     /**
      * @Route("/", name="recruteur_index", methods={"GET","POST"})
      */
@@ -99,4 +124,5 @@ class RecruteurController extends AbstractController
 
         return $this->redirectToRoute('recruteur_index');
     }
+
 }

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/grille/evaluation")
@@ -30,7 +31,7 @@ class GrilleEvaluationController extends AbstractController
      * @Route("/new/{id}", name="grille_evaluation_new", methods={"GET","POST"})
      */
     public function new(Request $request,$id): Response
-    {
+    {$value=0;
         $grilleEvaluation = new GrilleEvaluation();
         $entretien = $this->getDoctrine()->getRepository(Entretien::class)->find($id);
         $grilleEvaluation->SetEntretien($entretien);
@@ -38,6 +39,7 @@ class GrilleEvaluationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $grilleEvaluation = $form->getData();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($grilleEvaluation);
             $entityManager->flush();
@@ -47,6 +49,8 @@ class GrilleEvaluationController extends AbstractController
 
         return $this->render('grille_evaluation/new.html.twig', [
             'grille_evaluation' => $grilleEvaluation,
+            'value' => $value,
+
             'form' => $form->createView(),
         ]);
     }
@@ -94,4 +98,6 @@ class GrilleEvaluationController extends AbstractController
 
         return $this->redirectToRoute('grille_evaluation_index');
     }
+
+
 }
