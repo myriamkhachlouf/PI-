@@ -17,6 +17,24 @@ use Knp\Component\Pager\PaginatorInterface;
 class EntretienController extends Controller
 {
     /**
+     * @Route("/trieren_index", name="trieren_index", methods={"GET"})
+     */
+    public function index1(EntretienRepository $entretienRepository,Request $request): Response
+    {$allentretiens = $entretienRepository->listOrderByDate();
+        $entretiens = $this->get('knp_paginator')->paginate(
+        // Doctrine Query, not results
+            $allentretiens,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            3
+        );
+        return $this->render('entretien/index.html.twig', [
+            'entretiens' => $entretiens,
+        ]);
+    }
+
+    /**
      * @Route("/", name="entretien_index", methods={"GET"})
      */
     public function index(EntretienRepository $entretienRepository,Request $request, PaginatorInterface $paginator): Response
@@ -32,23 +50,6 @@ class EntretienController extends Controller
 
         return $this->render('entretien/index.html.twig', [
             'entretiens' => $entretiens
-        ]);
-    }
-    /**
-     * @Route("/trier_index", name="trier_index", methods={"GET"})
-     */
-    public function index1(EntretienRepository $entretienRepository,Request $request): Response
-    {$allentretiens = $entretienRepository->listOrderByDate();
-        $entretiens = $this->get('knp_paginator')->paginate(
-        // Doctrine Query, not results
-            $allentretiens,
-            // Define the page parameter
-            $request->query->getInt('page', 1),
-            // Items per page
-            3
-        );
-        return $this->render('entretien/index.html.twig', [
-            'entretiens' => $entretiens,
         ]);
     }
 
