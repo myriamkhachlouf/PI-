@@ -106,7 +106,7 @@ demo = {
     });
   },
 
-  initDashboardPageCharts: function() {
+  initDashboardPageCharts: function($data) {
 
     gradientChartOptionsConfigurationWithTooltipBlue = {
       maintainAspectRatio: false,
@@ -182,8 +182,7 @@ demo = {
             zeroLineColor: "transparent",
           },
           ticks: {
-            suggestedMin: 60,
-            suggestedMax: 125,
+
             padding: 20,
             fontColor: "#9a9a9a"
           }
@@ -358,9 +357,9 @@ demo = {
     gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
 
     var data = {
-      labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      labels: $data.mois,
       datasets: [{
-        label: "Data",
+        label: "nombre de publications",
         fill: true,
         backgroundColor: gradientStroke,
         borderColor: '#d048b6',
@@ -374,7 +373,7 @@ demo = {
         pointHoverRadius: 4,
         pointHoverBorderWidth: 15,
         pointRadius: 4,
-        data: [80, 100, 70, 80, 120, 80],
+        data: $data.publicationcount,
       }]
     };
 

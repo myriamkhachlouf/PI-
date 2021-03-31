@@ -1,0 +1,75 @@
+{# showing post for poster or admin #}
+{% extends 'publication/base.html.twig' %}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css') }}" /></noscript>
+{%endblock %}
+{% block title %}Publication{% endblock %}
+
+{% block content %}
+    <h1>Publication</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ publication.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ publication.title }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ publication.contenu }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ publication.createdAt ? publication.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ publication.updatedAt ? publication.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>main photo</th>
+                 <td> <img src="{{ asset('/uploads/' ~ publication.image.mainUrl) }}" width="100"></td>
+            </tr>
+            <tr>
+                <th>cover photo</th>
+                <td> <img src="{{ asset('/uploads/' ~ publication.image.coverUrl) }}" width="100"></td>
+            </tr>
+        </tbody>
+    </table>
+    {% if not is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('publication_index') }}"><button class="btn"> back to list </button></a>
+    {%endif%}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('adminpost') }}"><button class="btn btn-light">back to list</button></a>
+    {%endif%}
+    {% if is_granted('ROLE_ENTREPRISE') and (not is_granted('ROLE_ADMIN')) %}
+    <a href="{{ path('publication_edit', {'id': publication.id}) }}"><button class="btn btn-light">edit</button></a>
+    {% endif %}
+    {%if is_granted('ROLE_ADMIN')%}
+        <a href="{{ path('adminpublication_edit', {'id': publication.id}) }}"><button class="btn btn-light">edit</button></a>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('deleteform', {'id': publication.id}) }}"><button class="btn btn-light">Delete this post</button></a>
+    {% endif %}
+    {% if (is_granted('ROLE_ENTREPRISE') and (not is_granted('ROLE_ADMIN'))) %}
+        <a href="{{ path('publication_delete', {'id': publication.id}) }}"><button class="btn btn-light">Delete this post</button></a>
+    {% endif %}
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/util.js') }}"></script>
+    <script src="{{ asset('../assets/js/main.js') }}"></script>
+{% endblock %}

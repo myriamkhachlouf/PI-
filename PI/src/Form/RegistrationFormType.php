@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
 use Captcha\Bundle\CaptchaBundle\Validator\Constraints\ValidCaptcha;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use App\Entity\Images;
 
 class RegistrationFormType extends AbstractType
 {
@@ -51,6 +53,20 @@ class RegistrationFormType extends AbstractType
             ->add('telephone')
             ->add('adresse')
             ->add('domaine')
+            ->add('images', FileType::class, [
+                'label' => false,
+                'multiple' => true,
+                'mapped'=> false,
+                'required' =>false
+            ])
+            ->add('captchaCode', CaptchaType::class, array(
+                'captchaConfig' => 'ExampleCaptchaUserRegistration',
+                'constraints' => [
+                    new ValidCaptcha([
+                        'message' => 'Invalid captcha, please try again',
+                    ]),
+                ],
+            ))
         ;
     }
 

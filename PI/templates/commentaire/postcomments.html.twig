@@ -1,0 +1,31 @@
+{% extends 'commentaire/upgrade.html.twig' %}
+{% block tabletitle %} All Comments{% endblock %}
+{% block th %}
+    <th class="text-center">Id</th>
+    <th class="text-center">Posted By</th>
+    <th class="text-center">Created At</th>
+    <th class="text-center">Content</th>
+    <th class="text-center">Action</th>
+{% endblock %}
+{% block tr %}
+    {% for c in commentaires %}
+    <tr>
+        <td class="text-center">{{ c.id }}</td>
+        <td class="text-center">{{ c.postedby.nom }}</td>
+        <td class="text-center">{{ c.createdAt ? c.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+        <td class="text-center">{{ c.contenu }}</td>
+        {% if  is_granted('ROLE_ADMIN') %}
+        <td  class="text-center"><a href="{{ path('admindelete_comment',{'id':c.id,'publication_id':publication.id}) }}">
+                    <button class="btn btn-primary btn-block" onclick="demo.showNotification('top','center')">delete</button>
+                </a></td>
+        {%endif%}
+    </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">no records found</td>
+        </tr>
+{% endfor %}
+    {% if  is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('adminpost') }}"><button class="btn btn-light">back to list</button></a>
+    {%endif%}
+{% endblock %}

@@ -1,0 +1,99 @@
+{# all poster posts #}
+{% extends 'publication/base.html.twig' %}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/style.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css') }}" /></noscript>
+{%endblock %}
+{# {% block title %}All Posts{% endblock %}#}
+
+{% block content %}
+    <h1>All Posts</h1>
+{#
+    {% set day='now'|date('D')%}
+    {% set month='now'|date('M')%}
+    {% set year='now'|date('Y')%}
+
+    {{ day }} {{ month }} {{ year }}
+#}
+ <div id="searchbar">
+        <form action="{{ path('normalsearch') }}" method="post">
+            <input class="champ" name="search" type="text" placeholder="Search for a Post"/>
+            <input class="bouton" type="submit" value=" Search Post " />
+        </form>
+    </div>
+    <div class="dropdown" style="float:left;">
+        <button class="dropbtn">POSTED</button>
+        <div class="dropdown-content" style="left:0;">
+            <a href="{{ path('search_day')}}">This Day</a>
+            <a href="{{ path('search_month')}}">This Month</a>
+            <a href="{{ path('search_year')}}">This Year</a>
+        </div>
+    </div>
+
+    <div id="myBtnContainer">
+       <a href="{{ path('publication_index') }}" ><button class="btn active"> Show all</button></a>
+        <a href="{{ path('triparnom') }}"><button  class="btn">nom</button></a>
+        <a href="{{ path('tri_datecreation') }}" ><button class="btn"> Date de creation</button></a>
+       <a href="{{ path('tri_datemodification') }}" ><button class="btn"> Date de modification</button></a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Contenu</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>Main photo</th>
+                <th>cover photo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for publication in publications %}
+            {% if publication.postedby.id == app.user.id  %}
+            <tr>
+                <td>{{ publication.id }}</td>
+                <td>{{ publication.title }}</td>
+                <td>{{ publication.contenu }}</td>
+                <td>{{ publication.createdAt ? publication.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ publication.updatedAt ? publication.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td> <img src="{{ asset('/uploads/' ~ publication.image.mainUrl) }}" width="100"></td>
+                <td> <img src="{{ asset('/uploads/' ~ publication.image.coverUrl) }}" width="100"></td>
+                <td>
+                    <a href="{{ path('publication_show', {'id': publication.id}) }}"><button class="btn btn-dark">show</button></a>
+                    <a href="{{ path('publication_edit', {'id': publication.id}) }}"><button class="btn btn-dark">edit</button></a>
+                </td>
+            </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <div class="page">
+            <a>{{knp_pagination_render(publications)}}</a>
+        </div>
+    </div>
+
+    <a href="{{ path('publication_new') }}"><button class="btn"> Create new </button></a>
+{% endblock %}
+{% block script %}
+<script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+<script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+<script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+<script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+<script src="{{ asset('../assets/js/util.js') }}"></script>
+<script src="{{ asset('../assets/js/main.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,122 @@
+{# home posts #}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PHPJabbers.com | Free Job Agency Website Template</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header" class="alt">
+        <a href="base.html.twig" class="logo"><strong>Job Agency</strong> <span>Website</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            <li class="active"> <a href="{{ path('first') }}">Home </a> </li>
+            {% if ( not is_granted('ROLE_ENTREPRISE') or not is_granted('ROLE_CANDIDAT')) %}
+                <li class="active"> <a href="{{ path('app_login') }}">Sign in </a> </li>
+                <li> <a href="{{ path('app_register',{'role':'ROLE_CANDIDAT'}) }}">sign up as candidat</a> </li>
+                <li> <a href="{{ path('app_register',{'role':'ROLE_ENTREPRISE'})}}">sign up as entreprise</a> </li>
+                <li> <a href="{{ path('admin_utilisateurs')}}">Espace administrateur</a> </li>
+            {% endif %}
+            {% if  (is_granted('ROLE_ENTREPRISE')) %}
+                <li> <a href="{{ path('publication_new') }}">Create Post</a> </li>
+
+                <li> <a href="{{ path('publication_index') }}">show all posts</a> </li>
+            {% endif %}
+            <li> <a href="/about">About Us</a> </li>
+
+            <li><a href="/team">Team</a></li>
+
+            <li><a href="/testimonials">Testimonials</a></li>
+
+            <li><a href="/terms">Terms</a></li>
+
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main" class="alt">
+
+        <!-- One -->
+        <section id="one">
+            <div class="inner">
+                <header class="major">
+                    <h1>Blog</h1>
+                </header>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="tiles">
+            {% for p in publications %}
+                <article>
+							<span class="image">
+								<img src="{{ asset('/uploads/' ~ p.image.mainUrl) }}" width="100">
+							</span>
+                    <header class="major">
+                        <h3>{{ p.title }} </h3>
+
+                        <p><br> <span>{{ p.postedby.nom}}</span> | <span>{{ p.createdAt ? p.createdAt|date('Y-m-d H:i:s') : '' }}</span>
+
+                        <div class="major-actions">
+                            <a href="{{ path('blogdetails',{'id':p.id}) }}" class="button small next scrolly">Read Blog</a>
+                        </div>
+                    </header>
+                </article>
+            {% endfor %}
+
+
+
+        </section>
+        <div class="pagination">
+        <div class="page">
+            <a>{{ knp_pagination_render(publications) }}</a>
+        </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>Copyright © 2020 Company Name - Template by:</li>
+                <li> <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

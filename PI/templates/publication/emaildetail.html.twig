@@ -1,0 +1,12 @@
+{# gonna be in pdf attachement #}
+<h2 style="text-align: center; color: red; font-weight: bold;"> Detail de la suppression</h2>
+
+<h3>Nous voulons vous informer que votre article à été supprimé par l'admin le <p style="color: red; font-weight: bold;">{{ "now"|date("m/d/Y") }}</p></h3>
+<h4>Voici les détails de votre publication:</h4>
+<p>Titre de l'article :  <p style="color: red; font-weight: bold;">{{ publication.title }}</p></p>
+<p>Créé par :<p style="color: red; font-weight: bold;">{{ publication.postedby.nom }} </p></p>
+<p>Créé le :<p style=" color:#ff0000; font-weight: bold;">{{ publication.createdAt ? publication.createdAt|date('Y-m-d H:i:s') : '' }}</p></p>
+<p>Contenu de l'article :</p>
+<p style="font-weight: bold;">{{ publication.contenu }}</p>
+<p>les raisons de la suppression: </p>
+<p style="font-weight: bold;">* {{ description }}</p>

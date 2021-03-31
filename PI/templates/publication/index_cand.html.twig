@@ -1,0 +1,323 @@
+{# just the 3first posts for the candidate #}
+<!DOCTYPE HTML>
+<html>
+
+
+<head>
+
+        <title>PHPJabbers.com | Free Job Agency Website Template</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css') }}" /></noscript>
+
+
+</head>
+<body class="is-preload">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/first" class="logo"><strong>Job Agency</strong> <span>Website</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            <li class="active"> <a href="/first">Home </a> </li>
+            {# {% if  (app.session.get('role') == "entreprise") %} #}
+            {% if ( not is_granted('ROLE_ENTREPRISE') or not is_granted('ROLE_CANDIDAT')) %}
+            <li class="active"> <a href="{{ path('app_login') }}">Sign in </a> </li>
+            <li> <a href="{{ path('app_register',{'role':'ROLE_CANDIDAT'}) }}">sign up as candidat</a> </li>
+            <li> <a href="{{ path('app_register',{'role':'ROLE_ENTREPRISE'})}}">sign up as entreprise</a> </li>
+            <li> <a href="{{ path('admin_utilisateurs')}}">Espace administrateur</a> </li>
+            {% endif %}
+            {% if is_granted('ROLE_ENTREPRISE')%}
+            <li> <a href="{{ path('publication_new') }}">Create Post</a> </li>
+
+            <li> <a href="{{ path('publication_index') }}">show all posts</a> </li>
+             {% endif %}
+            <li> <a href="/about">About Us</a> </li>
+
+            <li><a href="/team">Team</a></li>
+
+            <li><a href="/testimonials">Testimonials</a></li>
+
+            <li><a href="/terms">Terms</a></li>
+
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Banner -->
+    <section id="banner" class="major">
+        <div class="inner">
+            <header class="major">
+                <h1>Lorem ipsum dolor sit amet isicing</h1>
+            </header>
+            <div class="content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos, libero!</p>
+                <ul class="actions">
+                    <li><a href="/contact" class="button next scrolly">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+        <!-- Main -->
+
+        <div id="main">
+
+
+            <!-- About us -->
+            <section>
+                <div class="inner">
+                    <header class="major">
+                        <h2>About us</h2>
+                    </header>
+                    <p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus.</p>
+                    <ul class="actions">
+                        <li><a href="/about" class="button next">Read more</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Featured Jobs -->
+            <section class="tiles">
+                <article>
+							<span class="image">
+								<img src="images/product-1-720x480.jpg" alt="" />
+							</span>
+
+                    <header class="major">
+                        <p>
+                            <i class="fa fa-calendar"></i> 15-06-2020 &nbsp;&nbsp;
+                            <i class="fa fa-file"></i> Contract &nbsp;&nbsp;
+                            <i class="fa fa-map-marker"></i> London
+                        </p>
+
+                        <h3>Lorem ipsum dolor sit</h3>
+
+                        <p><strong>$60 000</strong></p>
+
+                        <p> Medical / Health Jobs</p>
+                        <p> BMI Kings Park Hospital</p>
+
+                        <div class="major-actions">
+                            <a href="/jobdetails" class="button small next">View Job</a>
+                        </div>
+                    </header>
+                </article>
+
+                <article>
+							<span class="image">
+								<img src="images/product-2-720x480.jpg" alt="" />
+							</span>
+
+                    <header class="major">
+                        <p>
+                            <i class="fa fa-calendar"></i> 15-06-2020 &nbsp;&nbsp;
+                            <i class="fa fa-file"></i> Contract &nbsp;&nbsp;
+                            <i class="fa fa-map-marker"></i> London
+                        </p>
+
+                        <h3>Lorem ipsum dolor sit</h3>
+
+                        <p><strong>$60 000</strong></p>
+
+                        <p> Medical / Health Jobs</p>
+                        <p> BMI Kings Park Hospital</p>
+
+                        <div class="major-actions">
+                            <a href="/jobdetails" class="button small next">View Job</a>
+                        </div>
+                    </header>
+                </article>
+
+                <article>
+							<span class="image">
+								<img src="images/product-3-720x480.jpg" alt="" />
+							</span>
+
+                    <header class="major">
+                        <p>
+                            <i class="fa fa-calendar"></i> 15-06-2020 &nbsp;&nbsp;
+                            <i class="fa fa-file"></i> Contract &nbsp;&nbsp;
+                            <i class="fa fa-map-marker"></i> London
+                        </p>
+
+                        <h3>Lorem ipsum dolor sit</h3>
+
+                        <p><strong>$60 000</strong></p>
+
+                        <p> Medical / Health Jobs</p>
+                        <p> BMI Kings Park Hospital</p>
+
+                        <div class="major-actions">
+                            <a href="/jobs" class="button small next">View Job</a>
+                        </div>
+                    </header>
+                </article>
+
+                <article>
+							<span class="image">
+								<img src="images/product-4-720x480.jpg" alt="" />
+							</span>
+
+                    <header class="major">
+                        <p>
+                            <i class="fa fa-calendar"></i> 15-06-2020 &nbsp;&nbsp;
+                            <i class="fa fa-file"></i> Contract &nbsp;&nbsp;
+                            <i class="fa fa-map-marker"></i> London
+                        </p>
+
+                        <h3>Lorem ipsum dolor sit</h3>
+
+                        <p><strong>$60 000</strong></p>
+
+                        <p> Medical / Health Jobs</p>
+                        <p> BMI Kings Park Hospital</p>
+
+                        <div class="major-actions">
+                            <a href="/jobdetails" class="button small next">View Job</a>
+                        </div>
+                    </header>
+                </article>
+
+                <article>
+							<span class="image">
+								<img src="images/product-5-720x480.jpg" alt="" />
+							</span>
+
+                    <header class="major">
+                        <p>
+                            <i class="fa fa-calendar"></i> 15-06-2020 &nbsp;&nbsp;
+                            <i class="fa fa-file"></i> Contract &nbsp;&nbsp;
+                            <i class="fa fa-map-marker"></i> London
+                        </p>
+
+                        <h3>Lorem ipsum dolor sit</h3>
+
+                        <p><strong>$60 000</strong></p>
+
+                        <p> Medical / Health Jobs</p>
+                        <p> BMI Kings Park Hospital</p>
+
+                        <div class="major-actions">
+                            <a href="/jobdetails" class="button small next">View Job</a>
+                        </div>
+                    </header>
+                </article>
+
+                <article>
+							<span class="image">
+								<img src="images/product-6-720x480.jpg" alt="" />
+							</span>
+
+                    <header class="major">
+                        <p>
+                            <i class="fa fa-calendar"></i> 15-06-2020 &nbsp;&nbsp;
+                            <i class="fa fa-file"></i> Contract &nbsp;&nbsp;
+                            <i class="fa fa-map-marker"></i> London
+                        </p>
+
+                        <h3>Lorem ipsum dolor sit</h3>
+
+                        <p><strong>$60 000</strong></p>
+
+                        <p> Medical / Health Jobs</p>
+                        <p> BMI Kings Park Hospital</p>
+
+                        <div class="major-actions">
+                            <a href="/jobdetails" class="button small next">View Job</a>
+                        </div>
+                    </header>
+                </article>
+            </section>
+
+            <!-- Testimonials -->
+            <section>
+                <div class="inner">
+                    <header class="major">
+                        <h2>Testimonials</h2>
+                    </header>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><em>"Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt."</em></p>
+                            <p><strong>- John Doe</strong></p>
+
+                        </div>
+
+                        <div class="col-6">
+                            <p><em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores temporibus dolorum minus repudiandae, eaque error corporis aliquam, architecto amet itaque nobis. Omnis itaque est dolore, a nostrum numquam. Quae, facilis."</em></p>
+                            <p><strong>- Jack Smith</strong></p>
+                        </div>
+                    </div>
+                    <ul class="actions">
+                        <li><a href="/testimonials" class="button next">Read more</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Blog Posts -->
+            <section class="tiles">
+                {% for p in publications %}
+                    <article>
+							<span class="image">
+								<img src="{{ asset('/uploads/' ~ p.image.mainUrl) }}" width="100">
+							</span>
+                        <header class="major">
+                            <h3>{{ p.title }} </h3>
+
+                             <p><br> <span>{{ p.postedby.nom}}</span> | <span>{{ p.createdAt ? p.createdAt|date('Y-m-d H:i:s') : '' }}</span>
+
+                            <div class="major-actions">
+                                <a href="{{ path('blogdetails',{'id':p.id}) }}" class="button small next scrolly">Read Blog</a>
+                            </div>
+                        </header>
+                    </article>
+                {% endfor %}
+
+
+            </section>
+            <ul class="actions">
+                   <li><a href="/blog" class="button next">Read more</a></li>
+            </ul>
+        </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>Copyright © 2020 Company Name - Template by:</li>
+                <li> <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+
+<script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+<script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+<script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+<script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+<script src="{{ asset('../assets/js/util.js') }}"></script>
+<script src="{{ asset('../assets/js/main.js') }}"></script>
+</body>
+</html>%}

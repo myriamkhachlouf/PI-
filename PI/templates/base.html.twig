@@ -12,6 +12,7 @@
     {% block css %}
         <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
         <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css') }}" /></noscript>
     {%endblock %}
 </head>
@@ -47,6 +48,10 @@
             <li> <a href="{{ path('formation_new') }}">Gérer formation</a></li>
 
             <li> <a href="{{ path('evenement_new') }}">Gérer evenement</a></li>
+            {% if  (is_granted('ROLE_ENTREPRISE')) %}
+                <li> <a href="{{ path('publication_new') }}">Create Post</a> </li>
+                <li> <a href="{{ path('publication_index') }}">show all posts</a> </li>
+            {% endif %}
 
             <li><a href="/terms">Terms</a></li>
             <li><a href="#">Réclamation :</a>
@@ -358,6 +363,7 @@
     <script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
     <script src="{{ asset('../assets/js/util.js') }}"></script>
     <script src="{{ asset('../assets/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
 {% endblock %}
 
 </body>

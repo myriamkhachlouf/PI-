@@ -1,0 +1,42 @@
+{# admin's reason to delete post  #}
+{% extends 'publication/base.html.twig'%}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/style.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css') }}" /></noscript>
+{%endblock %}
+{% block content %}
+    <header class="major">
+        <h2>Reasons for deleting this post</h2>
+    </header>
+
+    <form method="post" action="{{path('adminpublication_delete',{'id':publication.id})}}">
+        <div class="fields">
+
+            <div class="field">
+                <label for="message">Description</label>
+                <textarea name="message" id="message" rows="6" required></textarea>
+            </div>
+
+            <div class="field half text-right">
+                <ul class="actions">
+                    <li><input type="submit" value="Delete Post" class="primary"></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/util.js') }}"></script>
+    <script src="{{ asset('../assets/js/main.js') }}"></script>
+{% endblock %}

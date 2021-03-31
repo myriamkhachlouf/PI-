@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use App\Entity\Users;
 use App\Form\EditUserType;
 use App\Form\RegistrationFormType;
@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\Images;
 
 
 
@@ -55,7 +56,9 @@ class UsersController extends AbstractController
         $form = $this->createForm(EditUserType::class,$user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+
             $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->flush();
             $this->addFlash('message','utilisateur modifie avec succes');
             return $this->redirectToRoute("show");

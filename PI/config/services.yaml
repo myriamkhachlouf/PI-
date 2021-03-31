@@ -6,6 +6,8 @@
 parameters:
     uploads_path: '/uploads/files/'
     upload_directory: '%kernel.project_dir%/public/upload'
+    main_directory: '%kernel.project_dir%/public/uploads'
+    cover_directory: '%kernel.project_dir%/public/uploads'
 services:
     # default configuration for services in *this* file
     _defaults:

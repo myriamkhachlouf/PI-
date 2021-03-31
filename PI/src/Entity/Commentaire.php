@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CommentaireRepository::class)
+ ** @ORM\HasLifecycleCallbacks
  */
 class Commentaire
 {
@@ -23,26 +24,39 @@ class Commentaire
     private $contenu;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
-    private $datecommentaire;
+    private $createdAt;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
-    private $datemodification;
+    private $updatedAt;
+
+
 
     /**
-     * @ORM\ManyToOne(targetEntity=entreprise::class)
+     * @ORM\ManyToOne(targetEntity=Publication::class, inversedBy="commentaires")
+     * @ORM\JoinColumn(name="publication_id",referencedColumnName="id")
+     */
+    private $publication;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="commentaires")
      * @ORM\JoinColumn(nullable=false)
      */
     private $postedby;
-
     /**
-     * @ORM\ManyToOne(targetEntity=publication::class, inversedBy="commentaires")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
-    private $publication;
+    public function updatedTimestamps(): void
+    {
+        $this->setUpdatedAt(new \DateTime('now'));
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTime('now'));
+        }
+    }
 
     public function getId(): ?int
     {
@@ -61,41 +75,7 @@ class Commentaire
         return $this;
     }
 
-    public function getDatecommentaire(): ?\DateTimeInterface
-    {
-        return $this->datecommentaire;
-    }
 
-    public function setDatecommentaire(\DateTimeInterface $datecommentaire): self
-    {
-        $this->datecommentaire = $datecommentaire;
-
-        return $this;
-    }
-
-    public function getDatemodification(): ?\DateTimeInterface
-    {
-        return $this->datemodification;
-    }
-
-    public function setDatemodification(\DateTimeInterface $datemodification): self
-    {
-        $this->datemodification = $datemodification;
-
-        return $this;
-    }
-
-    public function getPostedby(): ?entreprise
-    {
-        return $this->postedby;
-    }
-
-    public function setPostedby(?entreprise $postedby): self
-    {
-        $this->postedby = $postedby;
-
-        return $this;
-    }
 
     public function getPublication(): ?publication
     {
@@ -107,5 +87,53 @@ class Commentaire
         $this->publication = $publication;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostedby()
+    {
+        return $this->postedby;
+    }
+
+    /**
+     * @param mixed $postedby
+     */
+    public function setPostedby($postedby): void
+    {
+        $this->postedby = $postedby;
     }
 }

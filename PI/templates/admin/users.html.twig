@@ -3,15 +3,18 @@
 {% block title %} Liste des utilisateurs {% endblock %}
 
 {% block th %}
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Telephone</th>
-            <th>Adresse</th>
-            <th>Domaine</th>
+    {{ app.request.session.get("Roles") }}
+    <input type="text" id="search" class="form-control" placeholder="Search">
+             <th>ID</th>
+            <th><a href="{{ path('admin_triUtilisateursParNom') }}">Nom</a></th>
+            <th><a href="{{ path('admin_triUtilisateursParEmail') }}">Email</a></th>
+            <th><a href="{{ path('admin_triUtilisateursParTelephone') }}">Telephone</a></th>
+            <th><a href="{{ path('admin_triUtilisateursParAdresse') }}">Adresse</a></th>
+            <th><a href="{{ path('admin_triUtilisateursParDomaine') }}">Domaine</a></th>
+            <th>Image</th>
             <th>Roles</th>
-  {% endblock %}
-      {% block td %}
+{% endblock %}
+         {% block td %}
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
@@ -20,6 +23,10 @@
                 <td>{{ user.telephone }}</td>
                 <td>{{ user.adresse }}</td>
                 <td>{{ user.domaine }}</td>
+                <td>
+                    <img src="{{ asset ('/uploads/' ~ user.images.name ) }}"
+                         alt="image" width="150">
+                </td>
                 <td>
                     {% for role in user.roles %}
                         {% if role=="ROLE_ADMIN"%}
@@ -44,7 +51,79 @@
              <a href="{{ path('admin_users_list') }}">Imprimer</a>
 
              {{ knp_pagination_render(users) }}
-      {% endblock %}
+
+{% endblock %}
+{% block script %}
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#search").keyup(function(e){
+                /* La variable value va prendre la valeur insérer dans le champ de texte
+                afin d’effectuer la recherche */
+                var value = $(this).val();
+                /* Ajax est lancé lors du remplissage du champ texte dont l’id est
+                « search » pour faire la recherche */
+
+                $.ajax({
+                    /* l’url est une chaine de caractères contenant l’adresse où la requête est
+                    envoyée */
+                    url : "{{ path('admin_searchUserx') }}",
+                    /* La méthode utilisée pour transférer les données est GET */
+                    type : 'GET',
+                    /*Ici search value va prendre la chaine entrée par un utilisateur dans la
+                    zone de recherche et sera placée après l’url */
+                    data: {
+                        'searchValue': value
+                    },
+                    /*Cette fonction permet de vider le contenu du tableau pour recevoir le
+                    nouveau contenu*/
+                    success : function(retour){
+
+                        if(retour){
+                            $('#t tbody#search').empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $('#t tbody#all').hide();
+                                $('#t tbody#search').append('<tr><td> '+obj.id+'  </td><td>'+obj.nom+'</td><td>'+obj.email+'</td><td>'+obj.telephone+'</td><td>'+obj.adresse+'</td><td>'+obj.domaine+'</td></tr>');
+                            });
+                        }
+                        else
+                        {
+                            $('#t tbody#all').show();
+                            $('#t tbody#search').empty();
+                            $('#t tbody#search').fadeIn('fast');
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
 
 
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'domaine');
 
+
+            data.addRows([
+
+                {% for statUser in statUsers %}
+                ['{{ statUser.domaine }}'],
+                {% endfor %}
+            ]);
+
+            var options = {
+                pieHole: 0.3
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
+    </script>
+{% endblock %}

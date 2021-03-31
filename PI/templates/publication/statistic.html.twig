@@ -1,0 +1,42 @@
+{# dashboard #}
+{% extends 'publication/dashboard.html.twig' %}
+ {% block content %}
+     <div class="row">
+         <div class="col-12">
+             <div class="card card-chart">
+                 <div class="card-header ">
+                     <div class="row">
+                         <div class="col-sm-6 text-left">
+                             <h2 class="card-title">Post Uploaded</h2>
+                         </div>
+                    </div>
+                 </div>
+                 <div class="card-body">
+                     <div class="chart-area">
+                         <canvas id="chartLinePurple"></canvas>
+                         <canvas id="testchart"></canvas>
+                     </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}">
+    </script>
+    <script>
+        var settings = {
+            "url": "http://127.0.0.1:8000/publication/senddata",
+            "method": "GET",
+            "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (result) {
+            if (result) {
+                    demo.initDashboardPageCharts(result);
+
+
+        }});
+    </script>
+    }
+{% endblock %}

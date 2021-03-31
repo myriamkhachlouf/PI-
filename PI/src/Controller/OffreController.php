@@ -20,7 +20,9 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
  * @Route("/offre")
  */
 class OffreController extends Controller
-{      /**
+{
+
+    /**
  * @Route("/stat", name="stat")
  */
 

@@ -17,13 +17,10 @@ class RecruteurController extends AbstractController
 {
 
     /**
-     * @Route("/tri", name="tri_nom")
+     * @Route("/tri", name="tri")
      */
-    public function TriAction(Request $request)
+    public function Tri (Request $request)
     {
-
-
-
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
@@ -42,6 +39,9 @@ class RecruteurController extends AbstractController
 
     /**
      * @Route("/", name="recruteur_index", methods={"GET","POST"})
+     * @param RecruteurRepository $recruteurRepository
+     * @param Request $request
+     * @return Response
      */
     public function index(RecruteurRepository $recruteurRepository,Request $request): Response
     {if($request->isMethod("POST"))

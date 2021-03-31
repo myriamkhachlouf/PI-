@@ -8,6 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Controller\NormalizerInterface;
+
 
 /**
  * @method Users|null find($id, $lockMode = null, $lockVersion = null)
@@ -64,4 +66,55 @@ class UsersRepository extends ServiceEntityRepository implements PasswordUpgrade
         ;
     }
     */
+    public function getUserByNom()
+    {
+        return $query=$this->createQueryBuilder('p')
+            ->orderBy('p.nom','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUserByEmail()
+    {
+        return $query=$this->createQueryBuilder('p')
+            ->orderBy('p.email','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUserByTelephone()
+    {
+        return $query=$this->createQueryBuilder('p')
+            ->orderBy('p.telephone','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUserByDomaine()
+    {
+        return $query=$this->createQueryBuilder('p')
+            ->orderBy('p.domaine','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getUserByAdresse()
+    {
+        return $query=$this->createQueryBuilder('p')
+            ->orderBy('p.adresse','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findUserByName($nom){
+        return $this->createQueryBuilder('u')
+            ->where('u.nom LIKE :nom')
+            ->setParameter('nom', '%'.$nom.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function statistiqueDomaineUser(){
+        $query=$this->getEntityManager()
+            ->createQuery('Select m.domaine , count(m.id) as nbusers From App\Entity\Users m Group By m.domaine');
+        return $query->getResult();
+    }
 }

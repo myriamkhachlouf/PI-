@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Formation;
 use App\Entity\Reclamation;
 use App\Entity\Users;
@@ -22,6 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Images;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 
 /**
@@ -77,10 +78,12 @@ class AdminController extends AbstractController
         $form = $this->createForm(EditUserType::class,$user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+
             $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->flush();
             $this->addFlash('message','utilisateur modifie avec succes');
-            return $this->redirectToRoute("utilisateurs");
+            return $this->redirectToRoute("admin_utilisateurs");
         }
         return $this->render('users/editUser.html.twig', [
             'userForm'=>$form->createView()
@@ -96,7 +99,8 @@ class AdminController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function usersList( Request $request, PaginatorInterface $paginator){
+    public function usersList(UsersRepository $usersRepository, Request $request, PaginatorInterface $paginator){
+        $statUsers=$usersRepository->statistiqueDomaineUser();
 
         $donnees=$this->getDoctrine()->getRepository(Users::class)->findAll();
         $users= $paginator->paginate(
@@ -104,11 +108,150 @@ class AdminController extends AbstractController
             $request->query->getInt('page',1),
             4
         );
-        return $this->render("admin/users.html.twig",['users'=>$users,
+        return $this->render("admin/users.html.twig",['statUsers'=>$statUsers,'users'=>$users,
             ]);
     }
 
     /**
+     * @Route ("/triUtilisateursParNom",name="triUtilisateursParNom")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function triUtilisateurParNom(UsersRepository $usersRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+        $statUsers=$usersRepository->statistiqueDomaineUser();
+        $donnees=$usersRepository->getUserByNom();
+        $users= $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            4
+        );
+        return $this->render("admin/users.html.twig",['statUsers'=>$statUsers,'users'=>$users,
+        ]);
+
+    }
+
+
+    /**
+     * @Route ("/triUtilisateursParEmail",name="triUtilisateursParEmail")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function triUtilisateurParEmail(UsersRepository $usersRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+        $statUsers=$usersRepository->statistiqueDomaineUser();
+        $donnees=$usersRepository->getUserByEmail();
+        $users= $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            4
+        );
+        return $this->render("admin/users.html.twig",['statUsers'=>$statUsers,'users'=>$users,
+        ]);
+
+    }
+
+
+
+    /**
+     * @Route ("/triUtilisateursParTelephone",name="triUtilisateursParTelephone")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function triUtilisateurParTelephone(UsersRepository $usersRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+        $statUsers=$usersRepository->statistiqueDomaineUser();
+        $donnees=$usersRepository->getUserByTelephone();
+        $users= $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            4
+        );
+        return $this->render("admin/users.html.twig",['statUsers'=>$statUsers,'users'=>$users,
+        ]);
+
+    }
+
+
+
+    /**
+     * @Route ("/triUtilisateursParAdresse",name="triUtilisateursParAdresse")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function triUtilisateurParAdresse(UsersRepository $usersRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+        $statUsers=$usersRepository->statistiqueDomaineUser();
+        $donnees=$usersRepository->getUserByAdresse();
+        $users= $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            4
+        );
+        return $this->render("admin/users.html.twig",['statUsers'=>$statUsers,'users'=>$users,
+        ]);
+
+    }
+
+    /**
+     * @Route ("/triUtilisateursParDomaine",name="triUtilisateursParDomaine")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function triUtilisateurParDomaine(UsersRepository $usersRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+        $statUsers=$usersRepository->statistiqueDomaineUser();
+        $donnees=$usersRepository->getUserByDomaine();
+        $users= $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            4
+        );
+        return $this->render("admin/users.html.twig",['statUsers'=>$statUsers,'users'=>$users,
+        ]);
+
+    }
+
+
+    /**
+     * @Route("/searchUserx ", name="searchUserx")
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @return Response
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     */
+    public function searchUserx(Request $request,NormalizerInterface $Normalizer)
+{
+    $repository = $this->getDoctrine()->getRepository(Users::class);
+    $requestString=$request->get('searchValue');
+    $users = $repository->findUserByName($requestString);
+    $jsonContent = $Normalizer->normalize($users, 'json',['groups'=>'users:read']);
+    $retour=json_encode($jsonContent);
+    return new Response($retour);
+    }
+
+    /**
+     * @Route("/stat ", name="stat")
+     */
+    public function stat(UsersRepository $usersRepository,Request $request, PaginatorInterface $paginator)
+    {
+        $statUsers=$usersRepository->statistiqueDomaineUser();
+        $donnees=$this->getDoctrine()->getRepository(Users::class)->findAll();
+        $users= $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            4
+        );
+        return $this->render("admin/users.html.twig",['statUsers'=>$statUsers,'users'=>$users,
+            ]);
+
+    }
+ /**
      * Liste des reclamations du site
      *
      * @Route ("/reclamations",name="reclamations",methods={"GET","POST"})
@@ -307,6 +450,4 @@ class AdminController extends AbstractController
 
 
     }
-
-
-}
+    }

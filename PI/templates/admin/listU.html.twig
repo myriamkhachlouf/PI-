@@ -7,6 +7,7 @@
     <th>Telephone</th>
     <th>Adresse</th>
     <th>Domaine</th>
+    <th>Image</th>
     <th>Roles</th>
 </tr>
          <tbody>
@@ -18,6 +19,11 @@
                      <td>{{ user.telephone }}</td>
                      <td>{{ user.adresse }}</td>
                      <td>{{ user.domaine }}</td>
+                     <td>
+                         <img src="{{ asset ('/uploads/' ~ user.images.name ) }}"
+                              alt="image" width="150">
+                     </td>
+
                      <td>
                          {% for role in user.roles %}
                              {% if role=="ROLE_ADMIN"%}

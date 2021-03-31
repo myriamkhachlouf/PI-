@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class StageController extends Controller
 {
+
+
     /**
      * @Route("/", name="stage_index", methods={"GET","POST"})
      * @param OffreRepository $offreRepository
@@ -167,4 +169,9 @@ class StageController extends Controller
 
         return $this->redirectToRoute('stage_index');
     }
+
+
+
+
+
 }

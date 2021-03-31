@@ -1,0 +1,196 @@
+{# post details with its comments #}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>PHPJabbers.com | Free Job Agency Website Template</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('assets/css/noscript.css') }}" /></noscript>
+</head>
+<body class="is-preload">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header" class="alt">
+        <a href="/first" class="logo"><strong>Job Agency</strong> <span>Website</span></a>
+        <nav>
+            <a href="#menu">Menu</a>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <ul class="links">
+            <li> <a href="/first">Home </a> </li>
+            {% if not app.user %}
+
+                <li> <a href="{{ path('app_register',{'role':'ROLE_CANDIDAT'}) }}">sign up as candidat</a> </li>
+                <li> <a href="{{ path('app_register',{'role':'ROLE_ENTREPRISE'})}}">sign up as entreprise</a> </li>
+            {% endif %}
+                 <li> <a href="{{ path('app_login') }}">Sign in </a> </li>
+                 <li> <a href="{{ path('admin_utilisateurs')}}">Espace administrateur</a> </li>
+
+
+            {% if  (is_granted('ROLE_ENTREPRISE')) %}
+                <li> <a href="{{ path('publication_new') }}">Create Post</a> </li>
+
+                <li> <a href="{{ path('publication_index') }}">show all posts</a> </li>
+            {% endif %}
+            <li> <a href="/jobs">Jobs</a> </li>
+            <li class="active"> <a href="/blog">Blog</a> </li>
+
+            <li> <a href="/about">About Us</a> </li>
+
+            <li><a href="/team">Team</a></li>
+
+            <li><a href="/testimonials">Testimonials</a></li>
+
+            <li><a href="/terms">Terms</a></li>
+
+            <li><a href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main" class="alt">
+
+        <!-- One -->
+        <section id="one">
+            <div class="inner">
+                <header class="major">
+                    <h1>{{ publication.title }}</h1>
+
+                    <h4><i class="fa fa-user"></i>{{ publication.postedby.nom}}  &nbsp;&nbsp;&nbsp;&nbsp;  <i class="fa fa-calendar"></i> {{ publication.createdAt ? publication.createdAt|date('Y-m-d H:i:s') : '' }} <i class="fa fa-eye"></i> <span id="numberOfViews">{{publication.views}}</span></h4>
+                </header>
+                <span class="image main"><td> <img src="{{ asset('/uploads/' ~ publication.image.coverUrl) }}"></td></span>
+                <p>{{ publication.contenu }}</p>
+            </div>
+        </section>
+
+    </div>
+
+    <section id="contact">
+        <div class="inner">
+            {% if (is_granted('ROLE_ENTREPRISE') or is_granted('ROLE_CANDIDAT')) %}
+            <section>
+                <header class="major">
+                    <h2>Leave a Comment</h2>
+                </header>
+
+                <form method="post" action="{{path('commentaire_new',{'id':publication.id})}}">
+                    <div class="fields">
+
+                        <div class="field">
+                            <label for="message">Message</label>
+                            <textarea name="message" id="message" rows="6" required></textarea>
+                        </div>
+
+                        <div class="field half text-right">
+                            <ul class="actions">
+                                <li><input type="submit" value="Send Message" class="primary"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            {% endif %}
+            <section class="split">
+<div class="container">
+    {% for c in commentaires %}
+    <div class="row darker sb2">
+        <img src="https://image.shutterstock.com/image-vector/man-icon-vector-600w-1040084344.jpg" alt="Avatar">
+        <p><b style="color: #0c5460">{{ c.postedby.nom }}: </b>{{c.contenu}}</p> <br>
+        <br>
+        <span class="time-right">
+            <br>
+            {{c.createdAt ? c.updatedAt|date('Y-m-d H:i:s') : '' }}
+            {% if (is_granted('ROLE_ENTREPRISE') or is_granted('ROLE_CANDIDAT')) %}
+            {%if c.postedby.id == app.user.id%}
+            <a  style="width: 10px; height: 10px; padding-right: 0px;" href="{{ path('editform',{'id':c.id,'publication_id':publication.id}) }}"> <img src=" https://img.icons8.com/ultraviolet/72/edit.png" alt="edit"></a>
+    {%endif%}
+        </span>
+        {%if c.postedby.id == app.user.id%}
+
+        <a  style="width: 40px; height: 40px; margin-left: auto;" href="{{ path('delete_comment',{'id':c.id,'publication_id':publication.id}) }}"> <img src="https://img.icons8.com/ultraviolet/72/litter-disposal.png" alt="trash"></a>
+    {% endif %}
+        {% endif %}
+    </div>
+
+{% endfor %}
+    {# <div class="row darker sb2">
+        <img src="https://i.pinimg.com/originals/31/d8/65/31d86593e4e5fbc0bfb843c9546b1845.jpg" alt="Avatar" class="right" >
+        <p><b>Mercedes Benz Tunisia:</b> Hey! Please send me your cv!</p>
+        <span class="time-left">15:03</span>
+    </div>
+
+    <div class="row sb1">
+        <img src="https://cdn.wallpapersafari.com/48/70/dHrLB8.jpg" alt="Avatar">
+        <p><b>Sandy: </b>Thank you very much &#128037;!</p>
+        <span class="time-right">15:02</span>
+    </div>
+    <div class="row sb1">
+        <img src="https://cdn.wallpapersafari.com/48/70/dHrLB8.jpg" alt="Avatar">
+        <p><b>Sandy: </b>Thank you very much &#128037;!</p>
+        <span class="time-right">15:02</span>
+    </div>
+    #}
+</div>
+            </section>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="icons">
+                <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>Copyright © 2020 Company Name - Template by:</li>
+                <li> <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+<script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}"></script>
+{% if app.user %}
+<script>
+    var pubID = "{{- publication.id -}}";
+    var userID = "{{- app.user.id -}}";
+    var settings = {
+        "url": "http://127.0.0.1:8000/publication/views/"+pubID+"/"+userID,
+        "method": "GET",
+        "timeout": 0,
+    };
+
+    setInterval(function(){
+
+        $.ajax(settings).done(function (result) {
+            if (result) {
+                $("#numberOfViews").text(result.views);
+            }});
+    }, 5000);
+
+</script>
+{% endif %}
+<!-- Scripts -->
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.scrolly.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.scrollex.min.js') }}"></script>
+<script src="{{ asset('assets/js/browser.min.js') }}"></script>
+<script src="{{ asset('assets/js/breakpoints.min.js') }}"></script>
+<script src="{{ asset('assets/js/util.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+</body>
+</html>

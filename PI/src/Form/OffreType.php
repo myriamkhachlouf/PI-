@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 class OffreType extends AbstractType
@@ -34,8 +35,7 @@ class OffreType extends AbstractType
                 'class'=> Entreprise::class,
                 'choice_label'=>'nom'
             ])
-            ->add('image',FileType::class,array('label'=>'inserer une image',
-                'data_class' => null));
+            ->add('imageFile',VichImageType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

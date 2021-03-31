@@ -13,9 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use App\Entity\Images;
+use Snipe\BanBuilder\CensorWords;
+
 
 class RegistrationController extends AbstractController
 {
+   /* /**
+     * @Route("/test", name="test")
+     */
+  /*  public function test(){
+        $yourstring="kelma zeyda";
+        $censor = new CensorWords;
+        $badwords = $censor->setDictionary('dictionnaire.php');
+        $string = $censor->censorString($yourstring);
+        dd($string);
+        return $this->render('users/index.html.twig', ['string' => $string]);
+    }*/
     /**
      * @Route("/register/{role}", name="app_register")
      */
@@ -31,6 +45,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -39,8 +54,29 @@ class RegistrationController extends AbstractController
             );
             //generation du token d activation
             $user->setActivationToken(md5(uniqid()));
+            //recuperation des images transmises
+            $images = $form->get('images')->getData();
+                // Boucle sur les images
+            foreach ($images as $image) {
+                // on genere un nouveau nom de fichier avec md5. guessExtension
+            }
 
+            $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+            //On copie le fichier dans le dossier upload
+            $image->move(
+            $this->getParameter('upload_directory'),
+            $fichier
+            );
+            // on stocke l'image dans la bdd (son nom)
+            $img = new Images();
+            $img->setName($fichier);
+            $user->addImage($img);
             $entityManager = $this->getDoctrine()->getManager();
+            $censor = new CensorWords;
+            $nom = $form->get('nom')->getData();
+            $censor->setDictionary("badwords");
+            $string = $censor->censorString($nom);
+            $user->setNom($string['clean']);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

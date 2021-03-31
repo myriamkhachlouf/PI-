@@ -1,0 +1,36 @@
+{# editing post #}
+{% extends 'publication/base.html.twig' %}
+{% block stylesheet %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset('../assets/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}" />
+    <noscript><link rel="stylesheet" href="{{ asset('../assets/css/noscript.css') }}" /></noscript>
+{%endblock %}
+{% block title %}Edit Post{% endblock %}
+
+{% block content %}
+    <h1>Edit Post</h1>
+
+    {{ include('publication/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if not is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('publication_index') }}"><button class="btn"> back to list </button></a>
+        {{ include('publication/_delete_form.html.twig') }}
+    {%endif%}
+    {% if  is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('adminpost') }}"><button class="btn btn-light">back to list</button></a>
+    {%endif%}
+
+
+{# {{ include('publication/_delete_form.html.twig') }} #}
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/util.js') }}"></script>
+    <script src="{{ asset('../assets/js/main.js') }}"></script>
+{% endblock %}

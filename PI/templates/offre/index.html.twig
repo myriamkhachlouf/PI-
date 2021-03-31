@@ -142,7 +142,7 @@
                                     <a class="button small next" href="{{ path('offre_edit', {'id': offre.id}) }}">edit</a>
 
                                     {% if is_granted('ROLE_CANDIDAT') %}
-                                    <a class="button small next" href="{{ path('candidature_new', {'id': offre.id}) }}">Postuler</a>
+                                    <a class="button small next" href="{{ path('candidature_new', {'id': app.user.id}) }}">Postuler</a>
                                     {% endif %}
                                 </div>
                             </header>

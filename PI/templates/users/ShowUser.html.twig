@@ -20,6 +20,7 @@
     <th>Telephone</th>
     <th>Adresse</th>
     <th>Domaine</th>
+        <th>Images</th>
         <th>Actions</th>
     </tr>
     <tr>
@@ -29,6 +30,12 @@
     <td>{{ user.telephone }}</td>
     <td>{{ user.adresse }}</td>
     <td>{{ user.domaine }}</td>
+        <td>
+
+                <img src="{{ asset ('/uploads/' ~ user.images.name ) }}"
+                     alt="image" width="150">
+
+        </td>
     <td>
         <a href="{{ path('modifier_utilisateur', {'id': user.id}) }}">Modifier</a>
         <a href="{{ path('app_logout') }}">Logout</a>
