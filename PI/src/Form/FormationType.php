@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Evenement;
 use App\Entity\Formation;
 use App\Entity\Formateur;
-use App\Entity\Entreprise;
+use App\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -24,7 +24,7 @@ class FormationType extends AbstractType
             ->add('capacite')
             ->add('rating')
             ->add('entreprise',EntityType::class,[
-                'class'=> Entreprise::class,
+                'class'=> Users::class,
                 'choice_label'=>'nom'
             ])
             ->add('formateur',EntityType::class,[

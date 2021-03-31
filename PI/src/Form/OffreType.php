@@ -2,7 +2,7 @@
 
 namespace App\Form;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use App\Entity\Entreprise;
+use App\Entity\Users;
 use App\Entity\Offre;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,7 +32,7 @@ class OffreType extends AbstractType
             ])
             ->add('type')
             ->add('entreprise',EntityType::class,[
-                'class'=> Entreprise::class,
+                'class'=> Users::class,
                 'choice_label'=>'nom'
             ])
             ->add('imageFile',VichImageType::class);

@@ -61,6 +61,11 @@ class Formation
      * @ORM\JoinColumn(nullable=true)
      */
     private $idevenement;
+    /**
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="formation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $entreprise;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -92,6 +97,17 @@ class Formation
     public function setPeriode(int $periode): self
     {
         $this->periode = $periode;
+
+        return $this;
+    }
+    public function getEntreprise(): ?Users
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Users $entreprise): self
+    {
+        $this->entreprise = $entreprise;
 
         return $this;
     }

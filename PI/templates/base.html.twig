@@ -52,6 +52,10 @@
                 <li> <a href="{{ path('publication_new') }}">Create Post</a> </li>
                 <li> <a href="{{ path('publication_index') }}">show all posts</a> </li>
             {% endif %}
+            {% if  (is_granted('ROLE_ENTREPRISE')) %}
+                <li> <a href="{{ path('recruteur_index') }}">Gérer Les Recruteurs</a> </li>
+                <li> <a href="{{ path('entretien_index') }}">Affecter Les Entretiens</a> </li>
+            {% endif %}
 
             <li><a href="/terms">Terms</a></li>
             <li><a href="#">Réclamation :</a>

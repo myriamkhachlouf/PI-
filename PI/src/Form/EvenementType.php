@@ -6,6 +6,8 @@ use App\Entity\Evenement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class EvenementType extends AbstractType
 {
@@ -14,9 +16,11 @@ class EvenementType extends AbstractType
         $builder
             ->add('nom')
             ->add('description')
-            ->add('email')
+            ->add('email',EmailType::class)
             ->add('logo')
-            ->add('date')
+            ->add('date', DateTimeType::class, [
+                'date_widget' => 'single_text'
+            ])
         ;
     }
 

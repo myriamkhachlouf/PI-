@@ -17,7 +17,7 @@ class FirstController extends AbstractController
 
 
     /**
-     * @Route("/first", name="first")
+     * @Route("/brr", name="first")
      * @param Request $request
      * @param PublicationRepository $publicationRepository
      * @param PaginatorInterface $paginator
@@ -42,13 +42,13 @@ class FirstController extends AbstractController
         ]);
     }
     /**
-     * @Route("/brr", name="brr", methods={"GET"})
+     * @Route("/first", name="brr", methods={"GET"})
      * @param OffreRepository $offreRepository
      * @return Response
      */
     public function banana(OffreRepository $offreRepository): Response
     {
-        return $this->render('brr/index.html.twig');
+        return $this->render('first/index.html.twig');
 
     }
 
