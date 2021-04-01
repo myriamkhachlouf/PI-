@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\EntretienRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=EntretienRepository::class)
@@ -31,16 +33,20 @@ class Entretien
 
     /**
      * @ORM\Column(type="date")
+     *@Assert\NotBlank(message="date is required")
+     *@Assert\GreaterThan("today")
      */
     private $date;
 
     /**
      * @ORM\Column(type="time")
+     *@Assert\NotBlank(message="time is required")
      */
     private $horaire;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *@Assert\NotBlank(message="lieu is required")
      */
     private $lieu;
 
@@ -58,6 +64,18 @@ class Entretien
      * @ORM\OneToOne(targetEntity=GrilleEvaluation::class, mappedBy="entretien", cascade={"persist", "remove"})
      */
     private $grilleEvaluation;
+
+    protected $captchaCode;
+
+    public function getCaptchaCode()
+    {
+        return $this->captchaCode;
+    }
+
+    public function setCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+    }
 
     public function getId(): ?int
     {

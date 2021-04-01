@@ -31,11 +31,33 @@
         </tbody>
     </table>
 
-    <a href="{{ path('recruteur_index') }}">back to list</a>
+    <div class="content">
 
-    <a href="{{ path('recruteur_edit', {'id': recruteur.id}) }}">edit</a>
+        <div style="width: 300px; margin: 0 auto" class ="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+            <div style="width: 300px; margin: 0 auto" class ="btn-group btn-group-sm" aria-label="Set Select2 option">
+                <button  class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1">Modifier Les informations de ce Recruteur</button>
 
-    {{ include('recruteur/_delete_form.html.twig') }}
+            </div>
+
+        </div>
+
+        <div style="text-align: center; margin-left: 600px">
+
+            <a class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1" href='{{ path('recruteur_index')}}' >back to list</a>
+
+
+
+        </div>
+    </div>
+
+<div style="text-align: center; margin-left: 600px">
+    <form role="search" id="nav-search-form" method="post" action="{{ path('recruteur_edit', {'id': recruteur.id}) }}">
+
+
+
+
+
+
 {% endblock %}
 {% block script %}
     <script src="../assets/js/jquery.min.js"></script>

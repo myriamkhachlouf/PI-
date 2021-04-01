@@ -10,6 +10,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Captcha\Bundle\CaptchaBundle\Form\Type\CaptchaType;
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints\ValidCaptcha;
+
 
 class EntretienType extends AbstractType
 {
@@ -29,6 +32,16 @@ class EntretienType extends AbstractType
                 'class'=> Recruteur::class,
                 'choice_label'=>'id'
             ])
+            ->add('captchaCode', CaptchaType::class, array(
+                'captchaConfig' => 'ExampleCaptchaUserRegistration',
+                'constraints' => [
+                    new ValidCaptcha([
+                        'message' => 'Invalid captcha, please try again',
+                    ])
+                ])
+                        )
+
+
         ;
     }
 
