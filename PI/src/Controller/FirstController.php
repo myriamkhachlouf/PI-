@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CommentaireRepository;
-use App\Repository\OffreRepository;
+/*use App\Repository\OffreRepository;*/
 
 use App\Repository\PublicationRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -43,10 +43,9 @@ class FirstController extends AbstractController
     }
     /**
      * @Route("/first", name="brr", methods={"GET"})
-     * @param OffreRepository $offreRepository
      * @return Response
      */
-    public function banana(OffreRepository $offreRepository): Response
+    public function banana(): Response
     {
         return $this->render('first/index.html.twig');
 

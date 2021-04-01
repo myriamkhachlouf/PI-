@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Entreprise;
 use App\Entity\Offre;
 use App\Entity\Stage;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

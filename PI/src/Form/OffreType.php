@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Form;
+
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\Users;
 use App\Entity\Offre;
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 class OffreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,11 +33,12 @@ class OffreType extends AbstractType
                 ],
             ])
             ->add('type')
+            ->add('imageFile',VichImageType::class)
             ->add('entreprise',EntityType::class,[
                 'class'=> Users::class,
                 'choice_label'=>'nom'
             ])
-            ->add('imageFile',VichImageType::class);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

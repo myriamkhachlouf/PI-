@@ -23,8 +23,8 @@ class OffreController extends Controller
 {
 
     /**
- * @Route("/stat", name="stat")
- */
+     * @Route("/stat", name="stat")
+     */
 
     public function list1( )
     {
@@ -45,10 +45,12 @@ class OffreController extends Controller
 
         }
         foreach($entreprise as $end)
-        { if($end->getRoles()=='ROLE_ENTREPRISE') {
+            // { if($end->getRoles() == "ENTREPRISE") {
+        { if(in_array('ROLE_ENTREPRISE', $end->getRoles(), true)) {
             $nom[] = $end->getNom();
         }
         }
+        //dd($nom);
 
         return   $this->render('/rtl.html.twig', ['nom'=>json_encode($nom),'count'=>json_encode($count)]);
 
@@ -101,7 +103,7 @@ class OffreController extends Controller
      */
     public function tri (OffreRepository $offreRepository, Request $request,UsersRepository $EnreRepository): Response
     {   $entreprise = $EnreRepository->findAll();
-            $alloffres =$offreRepository->listOrderByEntreprise();
+        $alloffres =$offreRepository->listOrderByEntreprise();
         if($request->isMethod("POST"))
         {
             $value=$request->get('Recherche');
@@ -113,18 +115,18 @@ class OffreController extends Controller
             ]);
 
         }
-            $offre = $this->get('knp_paginator')->paginate(
-            // Doctrine Query, not results
-                $alloffres,
-                // Define the page parameter
-                $request->query->getInt('page', 1),
-                // Items per page
-                4
-            );
-            return $this->render('offre/index.html.twig', [
-                'offres' => $offre,
-                'entreprises' =>$entreprise,
-            ]);
+        $offre = $this->get('knp_paginator')->paginate(
+        // Doctrine Query, not results
+            $alloffres,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            4
+        );
+        return $this->render('offre/index.html.twig', [
+            'offres' => $offre,
+            'entreprises' =>$entreprise,
+        ]);
     }
 
     /**
@@ -137,10 +139,6 @@ class OffreController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('image')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('upload_directory'), $fileName);
-            $offre->setImage($fileName);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offre);
             $entityManager->flush();
@@ -172,10 +170,6 @@ class OffreController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('image')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('upload_directory'), $fileName);
-            $offre->setImage($fileName);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offre);
             $entityManager->flush();

@@ -5,7 +5,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 use App\Entity\Users;
 use App\Entity\Candidature;
-use App\Entity\Entreprise;
 use App\Entity\Entretien;
 use App\Entity\Offre;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
