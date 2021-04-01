@@ -106,6 +106,9 @@
 
                  {% for candidature in candidatures %}
                     <article>
+                        <span class="image">
+								<img src="{{ asset('upload/' ~ candidature.Pdf) }}" alt="" />
+							</span>
                         <header class="major">
                             <p>
                                 {% for offres in offres %}

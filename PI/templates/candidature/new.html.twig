@@ -1,9 +1,11 @@
-{% block title %}New candidature{% endblock %}
+    {% block title %}New candidature{% endblock %}
 <link rel="stylesheet" href="{{ asset('/assets/bootstrap/css/bootstrapform.min.css') }}" />
 {% block body %}
     <h1>Create new Candidature</h1>
 
     {{ include('candidature/_form.html.twig') }}
+    {{ form_row(form.captchaCode) }}
+
     <style>
         input[type=text], select {
             width: 100%;
