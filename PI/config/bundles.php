@@ -21,4 +21,5 @@ return [
     Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
     Nucleos\DompdfBundle\NucleosDompdfBundle::class => ['all' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
+    JMS\TranslationBundle\JMSTranslationBundle::class => ['all' => true],
 ];
