@@ -24,6 +24,19 @@ class EntretienRepository extends ServiceEntityRepository
             ->orderBy('s.date', 'ASC')
             ->getQuery()->getResult();
     }
+
+    public function getstat()
+    {
+        $emConfig = $this->getEntityManager()->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
+        return $query=$this->createQueryBuilder('e')
+            ->select('count(e.id) as num,MONTH(e.date) as month')
+            ->where('YEAR(e.date)= YEAR( CURRENT_DATE())')
+            ->groupBy('month')
+            ->getQuery();
+    }
     // /**
     //  * @return Entretien[] Returns an array of Entretien objects
     //  */

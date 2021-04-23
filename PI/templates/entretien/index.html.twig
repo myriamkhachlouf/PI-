@@ -71,7 +71,40 @@
     <div class="navigation">
         {{ knp_pagination_render(entretiens) }}
     </div>
-    <a href="{{ path('entretien_new') }}">Create new</a>
-    <a href="{{ path('trieren_index') }}">trier par date</a>
+
+
+
+
+    <div class="content">
+
+        <div style="text-align: center; margin-left: 600px">
+            <form role="search" id="nav-search-form" method="post" action="{{ path('entretien_new') }}">
+
+
+                <div style="width: 300px; margin: 0 auto class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+                <div style="width: 300px; margin: 0 auto class="btn-group btn-group-sm" aria-label="Set Select2 option">
+                <button  class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1">
+                    Ajouter un entretien
+                </button>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="content">
+
+        <div style="text-align: center; margin-left: 600px">
+
+            <a class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1" href="{{ path('trieren_index') }}">trier par date</a>
+
+
+
+        </div>
+    </div>
+
+
 
 {% endblock %}

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * @Route("/entretien")
@@ -52,6 +53,41 @@ class EntretienController extends Controller
             'entretiens' => $entretiens
         ]);
     }
+
+
+    /**
+     * @Route("/stat_entretien", name="stat_entretien", methods={"GET"})
+     * @param Request $request
+     * @param NormalizerInterface $Normalizer
+     * @param $entretienscount
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+
+    public function senddata(Request $request, NormalizerInterface $Normalizer )
+    {
+        $repository=$this->getDoctrine()->getRepository(Entretien::class);
+        //$data=json_decode($request->getContent(),true);
+        $entretiens=$repository->getstat();
+        foreach ($entretiens as $entretien){
+            $mois[]= $entretiens['month'];
+            $entretienscount[]=$entretiens['num'];
+        }
+        $month=[];
+        $count=[];
+        $i =0;
+        if  (in_array(strval($i), $mois))
+            $count[$i-1]=$entretienscount[array_search(strval($i), $mois)];
+        else {
+            $count[$i-1]=0;
+        }
+
+        $jsonContent = $Normalizer->normalize($entretiens, 'json');
+        //return new Response(json_encode($jsonContent));
+        return $this->json(['mois'=>$month,'entretienscount'=>$count]);
+
+    }
+
+
 
     /**
      * @Route("/new", name="entretien_new", methods={"GET","POST"})
@@ -161,6 +197,9 @@ class EntretienController extends Controller
             'entretiens' => $entretiens
         ]);
     }
+
+
+
 
 
 }

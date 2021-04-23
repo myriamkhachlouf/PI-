@@ -1,6 +1,6 @@
 
 {% extends 'base.html.twig' %}
-{% block title %} Edot Recruteur{% endblock %}
+{% block title %} Edit Recruteur{% endblock %}
 {% block stylesheet %}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -12,10 +12,21 @@
     <h1>Edit Recruteur</h1>
 
     {{ include('recruteur/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('recruteur_index') }}">back to list</a>
-
     {{ include('recruteur/_delete_form.html.twig') }}
+    <div class="content">
+
+        <div style="text-align: center; margin-left: 600px">
+
+            <a class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1" href="{{ path('recruteur_index') }}">back to list</a>
+
+
+
+        </div>
+    </div>
+
+
+
+
 {% endblock %}
 {% block script %}
     <script src="{{ asset('../assets/js/jquery.min.js') }}"></script>

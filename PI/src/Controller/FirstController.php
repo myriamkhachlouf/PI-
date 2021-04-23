@@ -247,5 +247,16 @@ class FirstController extends AbstractController
             'controller_name' => 'FirstController',
         ]);
     }
-    
+
+
+    /**
+     * @Route("/dashboard2", name="dashboard2")
+     */
+    public function dashboard2(): Response
+    {
+        return $this->render('dashboard2.html.twig', [
+            'controller_name' => 'FirstController',
+        ]);
+    }
+
 }
