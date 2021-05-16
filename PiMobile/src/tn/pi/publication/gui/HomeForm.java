@@ -8,7 +8,10 @@ package tn.pi.publication.gui;
 import com.codename1.ui.Button;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
+import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BoxLayout;
+import java.util.List;
+import tn.pi.publication.entities.Publication;
 
 /**
  *
@@ -25,7 +28,14 @@ public class HomeForm extends Form {
         current = this; //RÃ©cupÃ©ration de l'interface(Form) en cours
         setTitle("Home");
         setLayout(BoxLayout.y());
-
+        TextField searchField = new TextField("","Rechercher un produit");
+        addAll(searchField);
+        
+         searchField.addActionListener(e-> 
+            new SearchedPost(current,searchField.getText()).show());
+          
+                 
+       
         add(new Label("Choose an option"));
         Button btnAddTask = new Button("Add Post");
         Button btnListTasks = new Button("List Posts");

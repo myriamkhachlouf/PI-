@@ -7,24 +7,16 @@ package tn.pi.publication.gui;
 
 import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
-import com.codename1.components.SpanLabel;
-import static com.codename1.io.File.separator;
 import com.codename1.l10n.ParseException;
-import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.Graphics;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
-import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
-import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
-import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.plaf.Style;
 import java.io.IOException;
 import java.util.List;
@@ -36,22 +28,17 @@ import tn.pi.publication.services.PostService;
  *
  * @author Mahmoud
  */
-public class ListPostsForm extends Form{
+public class SearchedPost extends Form{
  private PostService ps;
  Form current;
-    public ListPostsForm(Form previous) {
+    public SearchedPost(Form previous,String s) {
   
-       
-        
-      
-
-
       /////// 
         ps = new PostService();
         setTitle("List Posts");
         setLayout(BoxLayout.y());
         
-         List<Publication> posts = ps.getAllPosts();
+         List<Publication> posts = ps.searchPostX(s);
         for (int i = 0; i < posts.size(); i++) {
             add(addPostItem(posts.get(i)));
         }
@@ -117,20 +104,11 @@ public class ListPostsForm extends Form{
         
         btnViewMore.addActionListener(e -> {
             try {
-                Publication Post=new Publication();
-                 ps = new PostService();
-                 ps.views(pub);
-                 List<Publication> posts = ps.getAllPosts();
-        for (int i = 0; i < posts.size(); i++) {
-            if (posts.get(i).getId()==pub.getId())
-            Post=posts.get(i);
-        }
-            new PostDetailsForm(current,Post).show();
-        }
-             catch (ParseException ex) {
-               
+                new PostDetailsForm(current,pub).show();
+            } catch (ParseException ex) {
+                
             } catch (IOException ex) {
-               
+                
             }
         });
         //addAll(btnViewMore);    
@@ -140,4 +118,5 @@ public class ListPostsForm extends Form{
         
         return holder;
     }
+    
 }

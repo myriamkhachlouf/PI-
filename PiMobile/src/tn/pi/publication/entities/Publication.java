@@ -19,7 +19,7 @@ public class Publication {
      private int id,views,totalEntrpriseForChart,totalPostForChart;
       private int postedby_id;
     private String contenu,title,nomEntrepriseForChart;
-    private Date createdAt,UpdatedAt;
+    private String createdAt,UpdatedAt;
    public Set<Integer> AlreadySeenPost=new HashSet<Integer>();
  public Publication() {
     }
@@ -57,19 +57,20 @@ public class Publication {
         this.AlreadySeenPost = list;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
+        
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public String getUpdatedAt() {
         return UpdatedAt;
     }
 
-    public void setUpdatedAt(Date UpdatedAt) {
+    public void setUpdatedAt(String UpdatedAt) {
         this.UpdatedAt = UpdatedAt;
     }
     

@@ -8,6 +8,7 @@ package tn.pi.publication.gui;
 import com.codename1.components.ImageViewer;
 import com.codename1.components.MultiButton;
 import com.codename1.components.SpanLabel;
+import com.codename1.l10n.ParseException;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Component;
@@ -38,30 +39,47 @@ import tn.pi.publication.services.PostService;
  */
 public class PostDetailsForm extends Form{
  private PostService ps;
-
-
-    public  PostDetailsForm(Form previous, Publication pub)
+ Form current;
+ TextField tfComment = new TextField("","Comment");
+    public void refresh(Publication pub){
+       
+        ps = new PostService();
+        //setLayout(BoxLayout.y());
+        List<Commentaire> comments = ps.GetPostComments(pub.getId());
+        for (int i = 0; i < comments.size(); i++) {
+            add(addCommentItem(comments.get(i),pub));
+            SpanLabel nl= new SpanLabel("");
+            add(nl);
+        }
+    }
+    public  PostDetailsForm(Form previous, Publication pub) throws ParseException, IOException
     {
+        current=previous;
         setTitle("Post Details");
         setLayout(BoxLayout.y());
-        
+       
         ImageViewer profilePic = new ImageViewer(MyApplication.theme.getImage("download (3).jpg").scaledWidth(Math.round(Display.getInstance().getDisplayWidth() / 0.5f)));
-        Label lbTitle = new Label("    "+pub.getTitle());
-        lbTitle.setAutoSizeMode(focusScrolling);
+        SpanLabel views = new SpanLabel("views : "+pub.getViews());
+        SpanLabel lbTitle = new SpanLabel("                       "+pub.getTitle());
+        
+       
         //lbTitle.setTextPosition(Component.CENTER);
         lbTitle.getAllStyles().setFgColor(0xff000);
+        SpanLabel createdAt = new SpanLabel("Created At: "+pub.getCreatedAt());
+        SpanLabel udatedAt = new SpanLabel("udated At: "+pub.getUpdatedAt());
         SpanLabel lbContent = new SpanLabel("Content: "+pub.getContenu());
        
         getToolbar().addCommandToRightBar("Retour", null, (evt) -> {
             previous.showBack();
+            
         });
         
-        addAll( lbTitle,profilePic, lbContent);
+        addAll( views,lbTitle,profilePic,createdAt,udatedAt, lbContent);
         //add comment
        
        
         setLayout(BoxLayout.y());
-        TextField tfComment = new TextField("","Comment");
+       // TextField tfComment = new TextField("","Comment");
         tfComment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -70,16 +88,18 @@ public class PostDetailsForm extends Form{
                else{     
                try {
                         Commentaire c = new Commentaire(pub.getId(),8,tfComment.getText());
-                        if( PostService.getInstance().addComment(c))
-                            Dialog.show("Success","Connection accepted",new Command("OK"));
+                        if( PostService.getInstance().addComment(c)){
+                                             
+                             add(addCommentItem(c,pub));
+            SpanLabel nl= new SpanLabel("");
+            add(nl);
+            tfComment.clear();
+                               new PostDetailsForm(current,pub).show();
+
+                            }
                         else
                             Dialog.show("ERROR", "Server error", new Command("OK"));
-                             ps = new PostService();
-       
-        List<Commentaire> comments = ps.GetPostComments(pub.getId());
-        for (int i = 0; i < comments.size(); i++) {
-            add(addCommentItem(comments.get(i)));
-        }
+                            
                }
                catch (NumberFormatException e) {
                         Dialog.show("ERROR", "Status must be a number", new Command("OK"));
@@ -87,29 +107,24 @@ public class PostDetailsForm extends Form{
                        //Logger.getLogger(AddPostForm.class.getName()).log(Level.SEVERE, null, ex);
                         System.out.println(".actionPerformed() eror");
                         
-                    }
+                    } catch (ParseException ex) {
+                       
+                   }
                }
             }
         }); 
         addAll(tfComment);
-        
-        //show comments
-         ps = new PostService();
-        //setLayout(BoxLayout.y());
-        List<Commentaire> comments = ps.GetPostComments(pub.getId());
-        for (int i = 0; i < comments.size(); i++) {
-            add(addCommentItem(comments.get(i)));
-        }
+      refresh(pub);
        }
-    public Container addCommentItem(Commentaire c){
+    public Container addCommentItem(Commentaire c,Publication pub){
 Container holder = new Container(BoxLayout.x());
         Container details = new Container(BoxLayout.y());
 holder.getUnselectedStyle().setBackgroundType(Style.BACKGROUND_GRADIENT_RADIAL);
-            holder.getUnselectedStyle().setBackgroundGradientEndColor(0xFFBCCA);
-            holder.getUnselectedStyle().setBackgroundGradientStartColor(0xFFBCCA);
+            holder.getUnselectedStyle().setBackgroundGradientEndColor(0xe7fdfa);
+            holder.getUnselectedStyle().setBackgroundGradientStartColor(0xe7fdfa);
             details.getUnselectedStyle().setBackgroundType(Style.BACKGROUND_GRADIENT_RADIAL);
-            details.getUnselectedStyle().setBackgroundGradientEndColor(0xFFBCCA);
-            details.getUnselectedStyle().setBackgroundGradientStartColor(0xFFBCCA);
+            details.getUnselectedStyle().setBackgroundGradientEndColor(0xe7fdfa);
+            details.getUnselectedStyle().setBackgroundGradientStartColor(0xe7fdfa);
       
         Label lbContent = new Label(c.getContenu());
         details.addAll(/*lbTitle,*/lbContent);
@@ -123,14 +138,18 @@ holder.getUnselectedStyle().setBackgroundType(Style.BACKGROUND_GRADIENT_RADIAL);
                try {
                    ps.deleteComment(c);
                    System.out.println("Suppression OK !");
+                   new PostDetailsForm(current,pub).show();
                } catch (Exception ex) {
                    Dialog.show("Error", "Comment isn't Deleted!", "OK", null);
                }
                
            } 
         });
+        MultiButton updateIcon = new MultiButton("");
+        updateIcon.setIcon(MyApplication.theme.getImage("icons8_edit_40px.png"));
+       updateIcon.addActionListener(e->{ new UpdateComment(current,c).show();});
         
-        holder.addAll(details,deleteIcon);
+        holder.addAll(details,deleteIcon,updateIcon);
         
        // holder.setLeadComponent(lbTitle);
         
