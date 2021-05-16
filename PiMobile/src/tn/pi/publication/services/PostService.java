@@ -58,7 +58,7 @@ public class PostService {
         req.addArgument("title",p.getTitle() );
         req.addArgument("contenu",p.getContenu() );
         req.addArgument("id",""+p.getId());
-        req.addArgument("postedby_id",""+8 );
+        req.addArgument("postedby_id",""+1 );
                 req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -93,7 +93,7 @@ public class PostService {
         req.setPost(false);
         req.addArgument("title",p.getTitle() );
         req.addArgument("contenu",p.getContenu() );
-        req.addArgument("postedby_id",""+8 );
+        req.addArgument("postedby_id",""+1 );
                 req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -119,13 +119,14 @@ public class PostService {
         List items = (List)response.get("items");
         return resultOK;
     }
-    public boolean deletePost(Publication p) throws IOException {
+    public boolean deletePost(Publication p, String reasons) throws IOException {
        
-        String url = Statics.BASE_URL + "/PostMobile/DeletePost"; //crÃ©ation de l'URL
+        String url = Statics.BASE_URL + "/PostMobile/DeleteMailAttach"; //crÃ©ation de l'URL
        
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         req.setPost(false);
         req.addArgument("id",""+p.getId() );
+        req.addArgument("reasons",reasons );
                 req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -262,7 +263,7 @@ public class PostService {
         req.setPost(false);
         req.addArgument("publication_id",""+c.getPublication_id() );
         req.addArgument("contenu",c.getContenu() );
-        req.addArgument("postedby_id",""+8 );
+        req.addArgument("postedby_id",""+1 );
                 req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -297,7 +298,7 @@ public class PostService {
         req.addArgument("id",""+c.getId() );
          req.addArgument("publication_id",""+c.getPublication_id() );
         req.addArgument("contenu",c.getContenu() );
-        req.addArgument("postedby_id",""+8 );
+        req.addArgument("postedby_id",""+1 );
                 req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {

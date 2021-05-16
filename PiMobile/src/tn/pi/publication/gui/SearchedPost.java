@@ -77,9 +77,10 @@ public class SearchedPost extends Form{
        deleteIcon.addActionListener(e->{
            if(Dialog.show("Confirmation", "Delete this Post?", "Yes", "No")){
                try {
-                   ps.deletePost(pub);
+                  /* ps.deletePost(pub);
                    System.out.println("Insertion OK !");
-                   new ListPostsForm(current).show();
+                   new ListPostsForm(current).show();*/
+                   new ReasonDelete(current,pub).show();
                } catch (Exception ex) {
                    Dialog.show("Error", "Post isn't Deleted!", "OK", null);
                }

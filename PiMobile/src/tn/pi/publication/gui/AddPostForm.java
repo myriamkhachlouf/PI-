@@ -45,7 +45,7 @@ public class AddPostForm extends Form{
                     Dialog.show("Alert", "Minimum 5 characters", new Command("OK"));
                else{     
                try {
-                        Publication p = new Publication(8,tfTitle.getText(), tfContent.getText());
+                        Publication p = new Publication(1,tfTitle.getText(), tfContent.getText());
                         if( PostService.getInstance().addPost(p))
                             Dialog.show("Success","Connection accepted",new Command("OK"));
                         else
