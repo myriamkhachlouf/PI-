@@ -23,12 +23,17 @@ class Publication
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups("publications:read")
+     * @Groups("publicationJson:read")
      */
     private $id;
-
+    /**
+     * @Groups("publicationJson:read")
+     */
+    private $postedby_id;
     /**
      * @ORM\Column(type="string", length=255,unique=true)
      * @Groups("publications:read")
+     * @Groups("publicationJson:read")
      */
     private $title;
 
@@ -36,17 +41,20 @@ class Publication
      * @ORM\Column(type="text")
      *  @Assert\NotBlank
      * @Groups("publications:read")
+     * @Groups("publicationJson:read")
      */
     private $contenu;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups("publications:read")
+     * @Groups("publicationJson:read")
      */
     private $createdAt;
     /**
      * @ORM\Column(type="datetime")
      * @Groups("publications:read")
+     * @Groups("publicationJson:read")
      */
     private $updatedAt;
 
@@ -62,7 +70,7 @@ class Publication
      * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"})
      * @Groups("publications:read", onDelete="CASCADE")
      */
-    private $image;
+   // private $image;
 
     /**
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="publications")
@@ -74,6 +82,7 @@ class Publication
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups("publicationJson:read")
      */
     private $views;
 
@@ -280,5 +289,21 @@ class Publication
         $this->seenby->removeElement($seenby);
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostedbyId()
+    {
+        return $this->postedby_id;
+    }
+
+    /**
+     * @param mixed $postedby_id
+     */
+    public function setPostedbyId($postedby_id): void
+    {
+        $this->postedby_id = $postedby_id;
     }
 }

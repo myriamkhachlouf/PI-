@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentaireRepository::class)
@@ -15,21 +16,29 @@ class Commentaire
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("commentJson:read")
      */
     private $id;
+    /**
+     * @Groups("commentJson:read")
+     */
+    private $postedby_id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("commentJson:read")
      */
     private $contenu;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("commentJson:read")
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("commentJson:read")
      */
     private $updatedAt;
 
@@ -135,5 +144,21 @@ class Commentaire
     public function setPostedby($postedby): void
     {
         $this->postedby = $postedby;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostedbyId()
+    {
+        return $this->postedby_id;
+    }
+
+    /**
+     * @param mixed $postedby_id
+     */
+    public function setPostedbyId($postedby_id): void
+    {
+        $this->postedby_id = $postedby_id;
     }
 }
